@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ images.logo }}">
+    <title>Top Up Wallet — Tutorsonhenry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        slate: { 850: '#1e293b', 900: '#0f172a' }
+                    },
+                    // Added Animation Config so 'animate-shake' works
+                    animation: { 'shake': 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both' },
+                    keyframes: {
+                        'shake': {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-900 h-screen flex overflow-hidden">
+
+    <aside id="sidebar"
+        class="fixed md:relative z-40 w-72 bg-slate-900 text-gray-400 h-full flex flex-col shadow-2xl transition-transform duration-300 transform -translate-x-full md:translate-x-0">
+
+        <div class="h-16 flex items-center px-6 border-b border-gray-800 bg-slate-900">
+            <a href="/" class="flex items-center gap-3">
+                <img src="{{ images.logo }}" alt="Logo" class="h-8 w-auto brightness-0 invert">
+                <span class="text-white font-bold text-lg tracking-wide">Tutorsonhenry</span>
+            </a>
+            <button id="closeSidebarBtn" class="md:hidden ml-auto text-gray-400 hover:text-white">✕</button>
+        </div>
+
+        <div class="p-6 border-b border-gray-800">
+            <div class="flex items-center gap-3">
+                <div
+                    class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                    {{ (user.name or 'User') | first | upper }}
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold truncate w-32">{{ user.name }}</h4>
+                    <p class="text-xs text-gray-500">Student Account</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Main</p>
+            <a href="/profile"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z">
+                    </path>
+                </svg>
+                <span class="font-medium">Overview</span>
+            </a>
+            <a href="/place-order"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span class="font-medium">Place New Order</span>
+            </a>
+            <a href="/orders"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                    </path>
+                </svg>
+                <span class="font-medium">My Orders</span>
+            </a>
+            <a href="/messages"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all justify-between">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Messages</span>
+                </div>
+                {% if user.messages > 0 %}
+                <span class="bg-blue-600 text-white text-xs py-0.5 px-2 rounded-full font-bold">{{ user.messages }}</span>
+                {% endif %}
+            </a>
+
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-6 mb-2">Finance</p>
+
+            <a href="/topup"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z">
+                    </path>
+                </svg>
+                <span class="font-medium">Wallet & Topup</span>
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-800 mt-auto">
+            <a href="/logout"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-400/10 hover:text-red-300 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg>
+                <span class="font-medium">Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-8 z-30">
+            <div class="flex items-center gap-4">
+                <button id="mobileSidebarBtn" class="md:hidden text-gray-500 hover:text-gray-700">☰</button>
+                <h1 class="text-xl font-bold text-gray-800 hidden md:block">My Wallet</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="h-9 w-9 rounded-full bg-gray-200 border-2 border-white shadow-sm overflow-hidden">
+                    <img src="https://ui-avatars.com/api/?name={{ user.name }}&background=0D8ABC&color=fff"
+                        alt="Avatar">
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 bg-gray-50">
+
+            <div class="max-w-5xl mx-auto mb-6">
+                {% if messages.success %}
+                <div
+                    class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm flex items-center animate-pulse">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <p class="font-medium">{{ messages.success }}</p>
+                </div>
+                {% endif %}
+                {% if messages.error %}
+                <div
+                    class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-sm flex items-center animate-shake">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="font-medium">{{ messages.error }}</p>
+                </div>
+                {% endif %}
+            </div>
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <div class="lg:col-span-2 space-y-6">
+
+                    <div
+                        class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-8 text-white shadow-xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10">
+                            <svg class="w-40 h-40" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21a9 9 0 100-18 9 9 0 000 18zm0-18a9 9 0 110 18 9 9 0 010-18z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-slate-400 text-sm font-medium uppercase tracking-wider mb-1">Available Balance
+                        </p>
+                        <h2 class="text-4xl font-bold mb-6">${{ user.walletBalance | default('0.00') }}</h2>
+                        <div class="flex gap-4">
+                            <button
+                                class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-semibold backdrop-blur-sm transition">View
+                                History</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-6">Add Funds</h3>
+
+                        <form action="/create-payment" method="POST" id="paymentForm">
+                            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">1. Select Amount</label>
+                            <div class="grid grid-cols-3 sm:grid-cols-4 gap-3 mb-6">
+                                <button type="button"
+                                    class="amount-btn py-3 border border-gray-200 rounded-xl font-bold text-gray-600 hover:border-blue-500 hover:bg-blue-50 transition"
+                                    data-amount="20">$20</button>
+                                <button type="button"
+                                    class="amount-btn py-3 border border-gray-200 rounded-xl font-bold text-gray-600 hover:border-blue-500 hover:bg-blue-50 transition"
+                                    data-amount="50">$50</button>
+                                <button type="button"
+                                    class="amount-btn py-3 border border-gray-200 rounded-xl font-bold text-gray-600 hover:border-blue-500 hover:bg-blue-50 transition"
+                                    data-amount="100">$100</button>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                                    <input type="number" name="customAmount" id="customAmount" placeholder="Other"
+                                        class="w-full h-full pl-6 pr-2 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none font-bold text-gray-800">
+                                </div>
+                            </div>
+                            <input type="hidden" name="amount" id="finalAmount" value="">
+
+                            <button type="submit"
+                                class="w-full py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-600/20 hover:bg-blue-700 hover:shadow-blue-600/40 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z">
+                                    </path>
+                                </svg>
+                                Proceed with PayPal / Card
+                            </button>
+                            <p class="text-center text-xs text-gray-400 mt-4">
+                                Secure payment handled by PayPal. You can use your card as a guest.
+                            </p>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-800 mb-4">Recent Transactions</h3>
+
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center pb-4 border-b border-gray-50">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                        ↓
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-800">Deposit</p>
+                                        <p class="text-xs text-gray-400">Dec 12, 2024</p>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-green-600">+$50.00</span>
+                            </div>
+
+                            <div class="flex justify-between items-center pb-4 border-b border-gray-50">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                                        ↑
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-800">Order #1923</p>
+                                        <p class="text-xs text-gray-400">Dec 10, 2024</p>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-gray-800">-$35.00</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+        const sidebar = document.getElementById('sidebar');
+        function toggle() { sidebar.classList.toggle('-translate-x-full'); }
+        mobileSidebarBtn.addEventListener('click', toggle);
+        closeSidebarBtn.addEventListener('click', toggle);
+
+        // Amount Selection Logic
+        const amountBtns = document.querySelectorAll('.amount-btn');
+        const customInput = document.getElementById('customAmount');
+        const finalInput = document.getElementById('finalAmount');
+
+        amountBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                amountBtns.forEach(b => {
+                    b.classList.remove('border-blue-600', 'bg-blue-50', 'text-blue-700', 'ring-2', 'ring-blue-100');
+                    b.classList.add('border-gray-200', 'text-gray-600');
+                });
+                btn.classList.remove('border-gray-200', 'text-gray-600');
+                btn.classList.add('border-blue-600', 'bg-blue-50', 'text-blue-700', 'ring-2', 'ring-blue-100');
+                finalInput.value = btn.dataset.amount;
+                customInput.value = '';
+            });
+        });
+
+        customInput.addEventListener('input', (e) => {
+            amountBtns.forEach(b => {
+                b.classList.remove('border-blue-600', 'bg-blue-50', 'text-blue-700', 'ring-2', 'ring-blue-100');
+                b.classList.add('border-gray-200', 'text-gray-600');
+            });
+            finalInput.value = e.target.value;
+        });
+    </script>
+</body>
+
+</html>

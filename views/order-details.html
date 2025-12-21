@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ images.logo }}">
+    <title>Order #{{ order.id }} — Tutorsonhenry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        slate: { 850: '#1e293b', 900: '#0f172a' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-900 h-screen flex overflow-hidden">
+
+    <aside id="sidebar"
+        class="fixed md:relative z-40 w-72 bg-slate-900 text-gray-400 h-full flex flex-col shadow-2xl transition-transform duration-300 transform -translate-x-full md:translate-x-0">
+
+        <div class="h-16 flex items-center px-6 border-b border-gray-800 bg-slate-900">
+            <a href="/" class="flex items-center gap-3">
+                <img src="{{ images.logo }}" alt="Logo" class="h-8 w-auto brightness-0 invert">
+                <span class="text-white font-bold text-lg tracking-wide">Tutorsonhenry</span>
+            </a>
+            <button id="closeSidebarBtn" class="md:hidden ml-auto text-gray-400 hover:text-white">✕</button>
+        </div>
+
+        <div class="p-6 border-b border-gray-800">
+            <div class="flex items-center gap-3">
+                <div
+                    class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                    {{ user.name | first | upper }}
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold truncate w-32">{{ user.name }}</h4>
+                    <p class="text-xs text-gray-500">Student Account</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Main</p>
+            <a href="/profile"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                    </path>
+                </svg>
+                <span class="font-medium">Overview</span>
+            </a>
+            <a href="/place-order"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span class="font-medium">Place New Order</span>
+            </a>
+            <a href="/orders"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                    </path>
+                </svg>
+                <span class="font-medium">My Orders</span>
+            </a>
+            <a href="/messages"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all justify-between">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Messages</span>
+                </div>
+                {% if user.messages > 0 %}
+                <span class="bg-blue-600 text-white text-xs py-0.5 px-2 rounded-full font-bold">{{ user.messages }}</span>
+                {% endif %}
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800">
+            <a href="/logout"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-400/10 hover:text-red-300 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg>
+                <span class="font-medium">Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-8 z-30">
+            <div class="flex items-center gap-4">
+                <button id="mobileSidebarBtn" class="md:hidden text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <h1 class="text-xl font-bold text-gray-800 hidden md:block">Order #{{ order.id or order._id }}</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/place-order" class="text-sm font-semibold text-blue-600 hover:underline">+ New Order</a>
+                <div class="h-9 w-9 rounded-full bg-gray-200 border-2 border-white shadow-sm overflow-hidden">
+                    <img src="https://ui-avatars.com/api/?name={{ user.name }}&background=0D8ABC&color=fff"
+                        alt="Avatar">
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50">
+
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <div class="lg:col-span-2 space-y-6">
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-[600px]">
+
+                        <div
+                            class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-xl">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <div
+                                        class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
+                                        W
+                                    </div>
+                                    <span
+                                        class="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">Writer Support</h3>
+                                    <p class="text-xs text-gray-500">Typically replies in 10 mins</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex-1 overflow-y-auto p-4 space-y-4" id="chatContainer">
+                            {% for msg in messages %}
+                            {% if msg.senderId.toString() == user.id.toString() %}
+                            <div class="flex gap-3 flex-row-reverse">
+                                <div class="bg-blue-600 p-3 rounded-2xl rounded-tr-none max-w-sm text-sm text-white">
+                                    {{ msg.content }}
+                                    <div class="text-[10px] text-blue-200 mt-1">{{ msg.createdAt | date("h:mm a") }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="flex gap-3">
+                                <div
+                                    class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 flex items-center justify-center text-xs font-bold text-gray-700">
+                                    {{ msg.senderName | first | upper }}
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded-2xl rounded-tl-none max-w-sm text-sm text-gray-700">
+                                    {{ msg.content }}
+                                    <div class="text-[10px] text-gray-400 mt-1">
+                                        <span class="font-bold">{{ msg.senderName }}</span> • {{ msg.createdAt |
+                                        date("h:mm a") }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% else %}
+                            <p class="text-center text-gray-400 text-sm mt-10">No messages yet. Start the conversation!
+                            </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="p-4 border-t border-gray-100 bg-white rounded-b-xl">
+                            <form action="/messages/send" method="POST" class="flex gap-2">
+                                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                                <input type="hidden" name="orderId" value="{{ order.id or order._id }}">
+
+                                <input type="text" name="content" placeholder="Type a message..." required
+                                    autocomplete="off"
+                                    class="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                                <button type="submit"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-blue-700">
+                                    Send
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="space-y-6">
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Current Status</span>
+                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded-full">In
+                                Progress</span>
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-800 mb-1">{{ order.title }}</h2>
+                        <p class="text-sm text-gray-500 mb-4">{{ order.type }} • {{ order.level }}</p>
+
+                        <div class="w-full bg-gray-100 rounded-full h-2 mb-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 45%"></div>
+                        </div>
+                        <p class="text-xs text-gray-400 text-right">45% Complete</p>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-800 mb-4">Order Summary</h3>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between py-2 border-b border-gray-50">
+                                <span class="text-gray-500">Order ID:</span>
+                                <span class="font-medium text-gray-900">#{{ order.id }}</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b border-gray-50">
+                                <span class="text-gray-500">Deadline:&nbsp;</span>
+                                <span class="font-medium text-red-600">{{ order.deadline }}</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b border-gray-50">
+                                <span class="text-gray-500">Pages</span>
+                                <span class="font-medium text-gray-900">{{ order.pages }} Pages</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b border-gray-50">
+                                <span class="text-gray-500">Price</span>
+                                <span class="font-bold text-green-600">${{ order.price }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-800 mb-4">Files</h3>
+
+                        <div class="mb-4">
+                            <p class="text-xs font-bold text-gray-400 uppercase mb-2">Final Delivery</p>
+                            <div
+                                class="bg-gray-50 border border-dashed border-gray-300 rounded-lg p-4 text-center text-sm text-gray-500">
+                                No files uploaded yet.
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase mb-2">Your Uploads</p>
+                            <a href="#"
+                                class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg group transition">
+                                <div class="h-8 w-8 bg-red-100 rounded flex items-center justify-center text-red-500">
+                                    📄
+                                </div>
+                                <div class="overflow-hidden">
+                                    <p class="text-sm font-medium text-gray-700 truncate group-hover:text-blue-600">
+                                        Instructions.pdf</p>
+                                    <p class="text-xs text-gray-400">1.2 MB</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Sidebar Toggle
+        const mobileBtn = document.getElementById('mobileSidebarBtn');
+        const closeBtn = document.getElementById('closeSidebarBtn');
+        const sidebar = document.getElementById('sidebar');
+
+        function toggle() { sidebar.classList.toggle('-translate-x-full'); }
+        mobileBtn.addEventListener('click', toggle);
+        closeBtn.addEventListener('click', toggle);
+    </script>
+</body>
+
+</html>

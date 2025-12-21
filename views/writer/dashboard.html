@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writer Workspace — Tutorsonhenry</title>
+    <link rel="icon" type="image/png" href="{{ images.logo }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { slate: { 850: '#1e293b', 900: '#0f172a' } } } }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-900 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-gray-400 h-full flex flex-col shadow-2xl flex-shrink-0">
+        <div class="h-16 flex items-center px-6 border-b border-gray-800 bg-slate-900">
+            <div class="flex items-center gap-3">
+                <img src="{{ images.logo }}" alt="Logo" class="h-8 w-auto brightness-0 invert">
+                <span class="text-white font-bold text-lg tracking-wide">Writer Hub</span>
+            </div>
+        </div>
+
+        <div class="p-6 border-b border-gray-800">
+            <div class="flex items-center gap-3">
+                <div
+                    class="h-10 w-10 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                    {{ (user.name or 'W') | first | upper }}
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold truncate w-32">{{ user.name }}</h4>
+                    <p class="text-xs text-purple-400 font-medium">Academic Tutor</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Workspace</p>
+
+            <a href="/writer/dashboard"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg bg-purple-600 text-white shadow-lg shadow-purple-900/20 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                    </path>
+                </svg>
+                <span class="font-medium">Dashboard</span>
+            </a>
+
+            <a href="/writer/available"
+                class="group flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <span class="font-medium">Browse Jobs</span>
+                </div>
+                {% if stats.available > 0 %}
+                <span class="bg-purple-500 text-white text-xs px-2 py-0.5 rounded-full">{{ stats.available }}</span>
+                {% endif %}
+            </a>
+
+            <a href="/writer/earnings"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                    </path>
+                </svg>
+                <span class="font-medium">Earnings</span>
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800 mt-auto">
+            <a href="/logout"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-purple-400 hover:bg-purple-400/10 hover:text-purple-300 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg>
+                <span class="font-medium">Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+
+        <header
+            class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 flex-shrink-0">
+            <h1 class="text-xl font-bold text-gray-800">Workspace Overview</h1>
+            <div class="flex items-center gap-4">
+                {% if messages.success %}
+                <div
+                    class="bg-green-100 border-l-4 border-green-500 text-green-700 px-4 py-2 text-sm rounded animate-pulse">
+                    {{ messages.success }}</div>
+                {% endif %}
+                {% if messages.error %}
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-2 text-sm rounded animate-shake">
+                    {{ messages.error }}</div>
+                {% endif %}
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-8 bg-gray-100">
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Active Jobs</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">{{ stats.active }}</h3>
+                        </div>
+                        <div class="p-2 bg-purple-50 rounded-lg text-purple-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Available to Claim</p>
+                            <h3 class="text-3xl font-bold text-blue-600 mt-2">{{ stats.available }}</h3>
+                        </div>
+                        <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">This Month</p>
+                            <h3 class="text-3xl font-bold text-emerald-600 mt-2">${{ stats.monthEarnings }}</h3>
+                        </div>
+                        <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7h8m0 0v8m0-8L5.257 19.757M5 7h-1a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V9a2 2 0 00-2-2h-1">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Earnings</p>
+                            <h3 class="text-3xl font-bold text-green-600 mt-2">${{ stats.total }}</h3>
+                        </div>
+                        <div class="p-2 bg-green-50 rounded-lg text-green-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-sm font-bold text-gray-600 uppercase tracking-wider mb-3">Performance</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm text-gray-600">Success Rate</span>
+                                <span class="font-bold text-purple-600">{{ stats.successRate }}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-600 h-2 rounded-full" style="width: {{ stats.successRate }}%"></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-gray-600">Completed Orders</span>
+                            <span class="font-bold text-gray-800">{{ stats.completed }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold text-gray-600 uppercase tracking-wider">Quick Actions</h3>
+                    </div>
+                    <div class="space-y-2">
+                        <a href="/writer/available" class="block w-full text-center px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 font-bold text-sm transition">
+                            Browse Jobs
+                        </a>
+                        <a href="/writer/earnings" class="block w-full text-center px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 font-bold text-sm transition">
+                            View Earnings
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-sm font-bold text-gray-600 uppercase tracking-wider mb-3">Account</h3>
+                    <div class="space-y-2 text-sm">
+                        <div>
+                            <p class="text-gray-500">Name</p>
+                            <p class="font-semibold text-gray-800">{{ user.name }}</p>
+                        </div>
+                        <div class="pt-2 border-t border-gray-100">
+                            <p class="text-gray-500 text-xs">Role</p>
+                            <p class="font-semibold text-gray-800">Academic Tutor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
+                    <h2 class="text-lg font-bold text-gray-800">Your Active Assignments</h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-gray-100 text-gray-600 uppercase font-bold text-xs">
+                            <tr>
+                                <th class="p-4 border-b border-gray-200">Order</th>
+                                <th class="p-4 border-b border-gray-200">Student</th>
+                                <th class="p-4 border-b border-gray-200">Deadline</th>
+                                <th class="p-4 border-b border-gray-200">Progress</th>
+                                <th class="p-4 border-b border-gray-200 text-right">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="text-sm text-gray-700 divide-y divide-gray-100">
+                            {% for order in orders %}
+                            <tr class="hover:bg-purple-50 transition">
+                                <td class="p-4">
+                                    <span class="font-bold text-purple-600">#{{ order._id.toString().slice(-6) }}</span>
+                                    <p class="font-medium text-gray-900 truncate max-w-[200px] mt-1">{{ order.title }}
+                                    </p>
+                                </td>
+                                <td class="p-4">
+                                    <div class="font-medium">{{ order.userId.name }}</div>
+                                </td>
+                                <td class="p-4 font-bold text-red-500">
+                                    {{ order.deadline | date("MMM d, HH:mm") }}
+                                </td>
+                                <td class="p-4">
+                                    {% if order.status != 'Completed' %}
+                                    <form action="/writer/update-status" method="POST" class="flex items-center gap-2">
+                                        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+                                        <input type="hidden" name="orderId" value="{{ order._id }}">
+                                        <select name="newStatus"
+                                            class="text-xs p-1.5 rounded border border-gray-300 focus:ring-purple-500">
+                                            <option value="In Progress" {% if order.status=='In Progress' %}selected{%
+                                                endif %}>In Progress</option>
+                                            <option value="Completed">Completed</option>
+                                        </select>
+                                        <button
+                                            class="text-purple-600 hover:text-purple-800 font-bold text-xs">Save</button>
+                                    </form>
+                                    {% else %}
+                                    <span class="text-xs text-green-600 font-bold flex items-center gap-1">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Done
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td class="p-4 text-right">
+                                    <a href="/writer/orders/{{ order._id }}" target="_blank"
+                                        class="text-gray-500 hover:text-purple-600 font-bold text-sm flex items-center justify-end gap-1">
+                                        Open
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="p-12 text-center text-gray-500">
+                                    <div class="flex flex-col items-center">
+                                        <svg class="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                            </path>
+                                        </svg>
+                                        <p class="mb-4">You have no active jobs.</p>
+                                        <a href="/writer/available"
+                                            class="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-purple-700 transition">Find
+                                            Work</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="p-6 border-b border-gray-200 bg-gray-50">
+                        <h2 class="text-lg font-bold text-gray-800">Recently Completed</h2>
+                    </div>
+                    {% if recentCompleted.length > 0 %}
+                    <div class="divide-y divide-gray-100">
+                        {% for order in recentCompleted %}
+                        <div class="p-4 hover:bg-gray-50 transition">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <p class="font-bold text-purple-600 text-sm">#{{ order._id.toString().slice(-6) }}</p>
+                                    <p class="text-gray-800 font-medium text-sm mt-1">{{ order.title }}</p>
+                                    <p class="text-gray-500 text-xs mt-1">Student: {{ order.userId.name }}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-green-600 text-sm">${{ order.price }}</p>
+                                    <p class="text-gray-500 text-xs mt-1">✓ Completed</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="p-8 text-center text-gray-500">
+                        <p class="text-sm">No completed orders yet</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">Tips to Earn More</h2>
+                    <div class="space-y-3">
+                        <div class="flex gap-3 items-start">
+                            <div class="w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-xs font-bold">1</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm text-gray-800">Complete Orders Faster</p>
+                                <p class="text-xs text-gray-600 mt-1">Meeting deadlines increases your rating and reliability score</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 items-start">
+                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-xs font-bold">2</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm text-gray-800">Browse Available Jobs</p>
+                                <p class="text-xs text-gray-600 mt-1">New orders are posted daily - check the available jobs regularly</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 items-start">
+                            <div class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-xs font-bold">3</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm text-gray-800">Communicate with Students</p>
+                                <p class="text-xs text-gray-600 mt-1">Quick responses and clear communication lead to better reviews</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+</body>
+
+</html>

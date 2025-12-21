@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ images.logo }}">
+    <title>Messages — Tutorsonhenry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        slate: { 850: '#1e293b', 900: '#0f172a' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-900 h-screen flex overflow-hidden">
+
+    <aside id="sidebar"
+        class="fixed md:relative z-40 w-72 bg-slate-900 text-gray-400 h-full flex flex-col shadow-2xl transition-transform duration-300 transform -translate-x-full md:translate-x-0">
+
+        <div class="h-16 flex items-center px-6 border-b border-gray-800 bg-slate-900">
+            <a href="/" class="flex items-center gap-3">
+                <img src="{{ images.logo }}" alt="Logo" class="h-8 w-auto brightness-0 invert">
+                <span class="text-white font-bold text-lg tracking-wide">Tutorsonhenry</span>
+            </a>
+            <button id="closeSidebarBtn" class="md:hidden ml-auto text-gray-400 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+
+        <div class="p-6 border-b border-gray-800">
+            <div class="flex items-center gap-3">
+                <div
+                    class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                    {{ (user.name or 'User') | first | upper }}
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold truncate w-32">{{ user.name }}</h4>
+                    <p class="text-xs text-gray-500">Student Account</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Main</p>
+
+            <a href="/profile"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                    </path>
+                </svg>
+                <span class="font-medium">Overview</span>
+            </a>
+
+            <a href="/place-order"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span class="font-medium">Place New Order</span>
+            </a>
+
+            <a href="/orders"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                    </path>
+                </svg>
+                <span class="font-medium">My Orders</span>
+            </a>
+
+            <a href="/messages"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20 transition-all justify-between">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Messages</span>
+                </div>
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800">
+            <a href="/logout"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-400/10 hover:text-red-300 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg>
+                <span class="font-medium">Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+
+        <header
+            class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-8 z-30 flex-shrink-0">
+            <div class="flex items-center gap-4">
+                <button id="mobileSidebarBtn" class="md:hidden text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <h1 class="text-xl font-bold text-gray-800 hidden md:block">Inbox</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="h-9 w-9 rounded-full bg-gray-200 border-2 border-white shadow-sm overflow-hidden">
+                    <img src="https://ui-avatars.com/api/?name={{ user.name }}&background=0D8ABC&color=fff"
+                        alt="Avatar">
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-hidden p-4 md:p-6 bg-gray-50">
+
+            <div
+                class="bg-white rounded-xl shadow-sm border border-gray-200 h-full flex overflow-hidden max-w-6xl mx-auto">
+
+                <div id="inboxList"
+                    class="w-full md:w-80 lg:w-96 border-r border-gray-200 flex flex-col h-full bg-white {% if currentOrder %}hidden md:flex{% endif %}">
+
+                    <div class="p-4 border-b border-gray-100">
+                        <h3 class="font-bold text-gray-700">Active Orders</h3>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto scrollbar-thin">
+                        {% for order in conversations %}
+                        <a href="/messages?orderId={{ order._id }}"
+                            class="block p-4 border-b border-gray-50 cursor-pointer transition hover:bg-gray-50 
+                           {% if currentOrder and currentOrder._id.toString() == order._id.toString() %}bg-blue-50 border-l-4 border-l-blue-600{% endif %}">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-bold text-gray-800 text-sm">#{{ order._id.toString().slice(-6) }}</h4>
+                                <span class="text-xs px-2 py-0.5 rounded-full 
+                                    {% if order.status == 'Completed' %}bg-green-100 text-green-700
+                                    {% elif order.status == 'In Progress' %}bg-blue-100 text-blue-700
+                                    {% else %}bg-gray-100 text-gray-600{% endif %}">
+                                    {{ order.status }}
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-600 truncate font-medium">{{ order.title }}</p>
+                        </a>
+                        {% else %}
+                        <div class="p-8 text-center text-gray-400">
+                            <p>No active conversations.</p>
+                            <a href="/place-order" class="text-blue-600 text-sm hover:underline mt-2 inline-block">Place
+                                an order</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div id="chatView"
+                    class="flex-1 flex flex-col h-full bg-gray-50/50 relative {% if not currentOrder %}hidden md:flex{% endif %}">
+
+                    {% if currentOrder %}
+                    <div class="p-4 bg-white border-b border-gray-200 flex items-center justify-between shadow-sm z-10">
+                        <div class="flex items-center gap-3">
+                            <a href="/messages" class="md:hidden text-gray-500 hover:text-gray-700 mr-2">← Back</a>
+                            <div
+                                class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold border border-indigo-200">
+                                W
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm">{{ currentOrder.title }}</h3>
+                                <p class="text-xs text-gray-500">Order #{{ currentOrder._id }}</p>
+                            </div>
+                        </div>
+                        <a href="/orders/{{ currentOrder._id }}"
+                            class="text-blue-600 text-sm font-semibold hover:underline">View Details</a>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin bg-gray-50" id="messagesArea">
+                        {% for msg in messages %}
+                        {% if msg.senderId.toString() == user.id.toString() %}
+                        <div class="flex gap-3 flex-row-reverse">
+                            <div
+                                class="bg-blue-600 p-3 rounded-2xl rounded-tr-none max-w-sm text-sm text-white shadow-sm">
+                                {{ msg.content }}
+                                <div class="text-[10px] text-blue-200 mt-1 text-right">{{ msg.createdAt | date("h:mm a")
+                                    }}</div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="flex gap-3">
+                            <div
+                                class="h-8 w-8 rounded-full bg-indigo-100 flex-shrink-0 flex items-center justify-center text-xs font-bold text-indigo-700">
+                                {{ msg.senderName | first | upper }}
+                            </div>
+                            <div
+                                class="bg-white border border-gray-200 p-3 rounded-2xl rounded-tl-none max-w-sm text-sm text-gray-700 shadow-sm">
+                                {{ msg.content }}
+                                <div class="text-[10px] text-gray-400 mt-1">
+                                    <span class="font-bold">{{ msg.senderName }}</span> • {{ msg.createdAt | date("h:mm
+                                    a") }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% else %}
+                        <div class="h-full flex flex-col items-center justify-center text-gray-400">
+                            <p>No messages yet. Start the conversation!</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="p-4 bg-white border-t border-gray-200 z-10">
+                        <form id="messageForm" class="flex gap-2 items-center">
+                            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                            <input type="hidden" name="orderId" value="{{ currentOrder._id }}">
+
+                            <div
+                                class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 focus-within:ring-2 focus-within:ring-blue-500 transition">
+                                <input type="text" name="content" placeholder="Type a message..." required
+                                    autocomplete="off"
+                                    class="w-full bg-transparent border-none focus:ring-0 text-sm py-1 outline-none">
+                            </div>
+                            <button type="submit"
+                                class="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md transition flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+
+                    {% else %}
+                    <div id="emptyState"
+                        class="hidden md:flex flex-col items-center justify-center h-full text-center p-6">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4 text-3xl">
+                            💬</div>
+                        <h3 class="text-lg font-bold text-gray-700">Select a conversation</h3>
+                        <p class="text-gray-500 text-sm">Choose an order from the left to start chatting.</p>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+        const sidebar = document.getElementById('sidebar');
+
+        function toggleSidebar() { sidebar.classList.toggle('-translate-x-full'); }
+        if (mobileSidebarBtn) mobileSidebarBtn.addEventListener('click', toggleSidebar);
+        if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', toggleSidebar);
+
+        // Auto-scroll chat to bottom
+        const messagesArea = document.getElementById('messagesArea');
+        function scrollToBottom() {
+            if (messagesArea) {
+                setTimeout(() => {
+                    messagesArea.scrollTop = messagesArea.scrollHeight;
+                }, 50);
+            }
+        }
+        scrollToBottom();
+
+        // Get current order ID from URL or data
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentOrderId = urlParams.get('orderId') || '{{ currentOrder._id | default("") }}';
+
+        // Poll for new messages every 2 seconds
+        setInterval(async () => {
+            if (!currentOrderId) return; // Don't poll if no order selected
+
+            try {
+                const response = await fetch(`/messages/api/check-messages?orderId=${currentOrderId}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.hasNewMessages) {
+                        // Reload messages
+                        location.reload();
+                    }
+                }
+            } catch (err) {
+                console.error('Error checking messages:', err);
+            }
+        }, 2000); // Check every 2 seconds
+
+        // Handle form submission with AJAX to avoid full page reload
+        const messageForm = document.getElementById('messageForm');
+        if (messageForm) {
+            messageForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(messageForm);
+                const content = formData.get('content');
+                const orderId = formData.get('orderId');
+                const csrfToken = formData.get('_csrf');
+
+                if (!content.trim()) return;
+
+                // Disable button and show loading state
+                const submitBtn = messageForm.querySelector('button[type="submit"]');
+                const originalHTML = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="animate-spin">⏳</span>';
+
+                try {
+                    const response = await fetch('/messages/api/send', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            orderId: orderId,
+                            content: content,
+                            _csrf: csrfToken
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        // Clear input
+                        messageForm.querySelector('input[name="content"]').value = '';
+                        submitBtn.innerHTML = originalHTML;
+                        submitBtn.disabled = false;
+                        
+                        // Reload messages after a short delay to show the new message
+                        setTimeout(() => {
+                            location.reload();
+                        }, 300);
+                    } else {
+                        alert('Error: ' + (data.message || 'Failed to send message'));
+                        submitBtn.innerHTML = originalHTML;
+                        submitBtn.disabled = false;
+                    }
+                } catch (err) {
+                    console.error('Error sending message:', err);
+                    alert('Error sending message: ' + err.message);
+                    submitBtn.innerHTML = originalHTML;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

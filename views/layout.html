@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Tutorsonhenry{% endblock %}</title>
+</head>
+
+<body class="bg-gray-50 h-screen flex overflow-hidden">
+
+    {% include "partials/sidebar.html" %}
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        {% include "partials/header.html" %}
+
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 bg-gray-50">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+</body>
+
+</html>

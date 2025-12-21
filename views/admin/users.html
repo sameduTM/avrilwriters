@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ images.logo }}">
+    <title>Manage Users — Tutorsonhenry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { slate: { 850: '#1e293b', 900: '#0f172a' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+
+        body.modal-active {
+            overflow-x: hidden;
+            overflow-y: hidden !important;
+        }
+
+        .opacity-0 {
+            opacity: 0;
+        }
+
+        .pointer-events-none {
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-900 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-gray-400 h-full flex flex-col shadow-2xl flex-shrink-0">
+        <div class="h-16 flex items-center px-6 border-b border-gray-800 bg-slate-900">
+            <div class="flex items-center gap-3">
+                <img src="{{ images.logo }}" alt="Logo" class="h-8 w-auto brightness-0 invert">
+                <span class="text-white font-bold text-lg tracking-wide">Admin Panel</span>
+            </div>
+        </div>
+
+        <div class="p-6 border-b border-gray-800">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-sm">A</div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold truncate w-32">{{ user.name }}</h4>
+                    <p class="text-xs text-red-400 font-medium">Administrator</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Management</p>
+
+            <a href="/admin/dashboard" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                </svg>
+                <span class="font-medium">Orders & Assignments</span>
+            </a>
+
+            <a href="/admin/users" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg bg-red-600 text-white shadow-lg shadow-red-900/20 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <span class="font-medium">Manage Users</span>
+            </a>
+
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 mt-6">Insights</p>
+
+            <a href="/admin/analytics" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <span class="font-medium">Analytics & Reports</span>
+            </a>
+
+            <a href="/admin/financial" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="font-medium">Financial Management</span>
+            </a>
+
+            <a href="/admin/activity" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span class="font-medium">Activity Logs</span>
+            </a>
+
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 mt-6">Support & System</p>
+
+            <a href="/admin/messages" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <span class="font-medium">Messages & Support</span>
+            </a>
+
+            <a href="/admin/settings" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span class="font-medium">System Settings</span>
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800 mt-auto">
+            <a href="/logout" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-400/10 hover:text-red-300 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                </svg>
+                <span class="font-medium">Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 flex-shrink-0">
+            <h1 class="text-xl font-bold text-gray-800">Manage Users</h1>
+
+            <div class="flex items-center gap-4">
+                {% if messages.success %}
+                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 px-4 py-2 text-sm rounded animate-pulse">
+                    {{ messages.success }}
+                </div>
+                {% endif %}
+                {% if messages.error %}
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-2 text-sm rounded animate-shake">
+                    {{ messages.error }}
+                </div>
+                {% endif %}
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-8 bg-gray-100">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                    <h2 class="text-lg font-bold text-gray-800">Registered Users</h2>
+                    <span class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-bold">{{ users.length }} Total</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-gray-50 text-gray-500 uppercase font-bold text-xs">
+                            <tr>
+                                <th class="p-4 border-b border-gray-100">User Details</th>
+                                <th class="p-4 border-b border-gray-100">Email</th>
+                                <th class="p-4 border-b border-gray-100">Role</th>
+                                <th class="p-4 border-b border-gray-100">Joined</th>
+                                <th class="p-4 border-b border-gray-100 text-right">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="text-sm text-gray-700 divide-y divide-gray-100">
+                            {% for u in users %}
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs text-gray-700">
+                                            {{ u.name | first | upper }}
+                                        </div>
+                                        <span class="font-semibold text-gray-900">{{ u.name }}</span>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-gray-600">{{ u.email }}</td>
+                                <td class="p-4">
+                                    <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-block
+                                        {% if u.role == 'admin' %} bg-red-100 text-red-700
+                                        {% elif u.role == 'writer' %} bg-purple-100 text-purple-700
+                                        {% else %} bg-blue-100 text-blue-700 {% endif %}">
+                                        {{ u.role }}
+                                    </span>
+                                </td>
+                                <td class="p-4 text-gray-500">
+                                    {{ u.createdAt.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'}) }}
+                                </td>
+                                <td class="p-4 text-right">
+                                    <button onclick="openModal('{{ u._id }}', '{{ u.name }}', '{{ u.role }}')" class="text-indigo-600 font-semibold text-sm hover:text-indigo-800 hover:underline">
+                                        Edit Role
+                                    </button>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="p-8 text-center text-gray-500">No users found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Role Edit Modal -->
+    <div id="roleModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-xl shadow-2xl z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
+                <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+                    <p class="text-lg font-bold text-gray-800">Edit User Role</p>
+                    <div class="modal-close cursor-pointer p-2 hover:bg-gray-100 rounded-full transition">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="my-5">
+                    <p class="mb-4 font-medium text-gray-600">Changing role for: <span id="modalUserName" class="font-bold text-gray-900"></span></p>
+
+                    <form action="/admin/update-role" method="POST" id="roleForm">
+                        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                        <input type="hidden" name="targetUserId" id="modalUserId">
+
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Select New Role</label>
+                        <select name="newRole" id="modalRoleSelect" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white text-gray-900 font-medium">
+                            <option value="student">Student</option>
+                            <option value="writer">Writer / Tutor</option>
+                            <option value="admin">Admin</option>
+                        </select>
+
+                        <div class="mt-6 flex justify-end gap-3">
+                            <button type="button" class="modal-close px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition">
+                                Update Role
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.querySelector('.modal');
+        const modalUserId = document.getElementById('modalUserId');
+        const modalUserName = document.getElementById('modalUserName');
+        const modalRoleSelect = document.getElementById('modalRoleSelect');
+
+        function openModal(userId, userName, currentRole) {
+            modalUserId.value = userId;
+            modalUserName.innerText = userName;
+            modalRoleSelect.value = currentRole;
+            toggleModal();
+        }
+
+        function toggleModal() {
+            const body = document.querySelector('body');
+            modal.classList.toggle('opacity-0');
+            modal.classList.toggle('pointer-events-none');
+            body.classList.toggle('modal-active');
+        }
+
+        const overlay = document.querySelector('.modal-overlay');
+        overlay.addEventListener('click', toggleModal);
+
+        const closeButtons = document.querySelectorAll('.modal-close');
+        closeButtons.forEach(button => {
+            button.addEventListener('click', toggleModal);
+        });
+    </script>
+
+</body>
+
+</html>

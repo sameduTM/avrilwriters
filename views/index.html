@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en" class="overflow-x-hidden">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ images.favicon }}">
+    <title>AvrilWriters — Nursing Excellence</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0056b3',
+                        accent: '#22a748',
+                        surface: '#f8fafc',
+                        muted: '#6c757d',
+                        whatsapp: '#25D366',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+                        serif: ['Playfair Display', 'ui-serif', 'Georgia'],
+                    },
+                    animation: {
+                        shimmer: 'shimmer 1s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+                    },
+                    keyframes: {
+                        shimmer: {
+                            '0%': { transform: 'translateX(-100%) skewX(-15deg)' },
+                            '100%': { transform: 'translateX(200%) skewX(-15deg)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        .hover-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body
+    class="font-sans text-slate-600 bg-slate-50 selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden w-full max-w-[100vw]">
+
+    <header
+        class="sticky top-0 z-50 w-full transition-all duration-300 border-b border-slate-200 bg-slate-50/90 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+
+            <div class="flex items-center gap-3 group cursor-pointer pl-4">
+                <a href="/" class="transition-transform duration-300 group-hover:scale-105">
+                    <img src="{{ images.logo }}" alt="Logo" class="h-10">
+                </a>
+                <a href="/" class="flex flex-col">
+                    <span class="text-slate-800 font-bold text-xl tracking-tight leading-none">AvrilWriters</span>
+                    <span class="text-xs text-slate-500 font-medium tracking-wide">Nursing Excellence</span>
+                </a>
+            </div>
+
+            <nav class="hidden lg:flex items-center gap-8">
+                <a href="#home"
+                    class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors relative group py-2">Home<span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 ease-out group-hover:w-full"></span></a>
+                <a href="#services"
+                    class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors relative group py-2">Services<span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 ease-out group-hover:w-full"></span></a>
+                <a href="#how"
+                    class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors relative group py-2">How
+                    it Works<span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 ease-out group-hover:w-full"></span></a>
+                <a href="#results"
+                    class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors relative group py-2">Results<span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 ease-out group-hover:w-full"></span></a>
+                <a href="#testimonials"
+                    class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors relative group py-2">Testimonials<span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 ease-out group-hover:w-full"></span></a>
+            </nav>
+
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="https://wa.me/15708136189" target="_blank"
+                    class="px-5 py-2.5 text-sm font-semibold text-whatsapp hover:text-green-700 transition-colors flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                    </svg>
+                    VIP Support
+                </a>
+                <a href="/place-order-social"
+                    class="group relative overflow-hidden px-6 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold shadow-sm hover:bg-blue-700 transition-all duration-300">
+                    <span class="relative z-10">Place Order</span>
+                    <div
+                        class="absolute inset-0 -translate-x-full group-hover:animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent z-0">
+                    </div>
+                </a>
+            </div>
+
+            <button id="btnMenu" class="lg:hidden p-2 text-slate-600 hover:text-blue-600 focus:outline-none">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobileMenu"
+            class="hidden lg:hidden overflow-hidden bg-slate-50 border-t border-slate-100 shadow-xl transition-all duration-300">
+            <nav class="flex flex-col p-6 space-y-4 text-center">
+                <a href="#home" class="text-base font-medium text-slate-700 hover:text-blue-600">Home</a>
+                <a href="#services" class="text-base font-medium text-slate-700 hover:text-blue-600">Services</a>
+                <a href="#how" class="text-base font-medium text-slate-700 hover:text-blue-600">How it works</a>
+                <a href="#results" class="text-base font-medium text-slate-700 hover:text-blue-600">Results</a>
+                <a href="#testimonials"
+                    class="text-base font-medium text-slate-700 hover:text-blue-600">Testimonials</a>
+                <hr class="border-slate-200 my-2">
+                <a href="/place-order-social"
+                    class="block w-full py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-bold shadow-sm">Place
+                    Order</a>
+                <a href="https://wa.me/15708136189" target="_blank"
+                    class="block w-full py-3 rounded-lg border border-whatsapp text-whatsapp font-bold hover:bg-whatsapp hover:text-green-700 transition-colors">VIP
+                    Support on WhatsApp</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home"
+            class="relative bg-cover bg-center bg-no-repeat min-h-[90vh] sm:min-h-[70vh] flex items-center"
+            style="background-image: url('{{ images.hero }}');">
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/70 to-gray-900/30"></div>
+            <div
+                class="relative container mx-auto px-6 py-20 lg:py-0 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                <div class="text-center lg:text-left lg:w-1/2 text-white space-y-8 pb-8 lg:pb-0 w-full z-10">
+                    <div
+                        class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/30 backdrop-blur-sm text-blue-100 text-sm font-semibold tracking-wide mb-2">
+                        #1 Rated Nursing Tutoring Service</div>
+                    <h1
+                        class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight shadow-black drop-shadow-lg">
+                        Ace your nursing Exams and Coursework with ease.<br /><span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">Exams &
+                            Classes</span>
+                    </h1>
+                    <p class="text-lg lg:text-xl text-gray-200 max-w-lg mx-auto lg:mx-0 leading-relaxed">We provide
+                        specialized help for TEAS, HESI, NCLEX, and nursing modules. Get matched with an expert tutor
+                        today.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+                        <a href="https://www.instagram.com/tutorsonhenry/#"
+                            class="bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 hover:-translate-y-1 transition-all duration-300 w-full sm:w-auto">Order
+                            Via Instagram</a>
+                        <a href="https://api.whatsapp.com/send/?phone=15708136189&text=Hi%2C%20I%20need%20help%20with%20a%20nursing%20assignment."
+                            target="_blank"
+                            class="px-8 py-4 rounded-xl font-bold text-lg border border-green-600/50 bg-green-500 text-white hover:bg-green-600 transition-all duration-300 shadow-lg shadow-green-600/30 w-full sm:w-auto">Order
+                            Via WhatsApp</a>
+                    </div>
+                    <p class="pt-2 text-sm text-gray-200/80 text-center lg:text-left">Or Contact us on Facebook <a
+                            href="https://www.facebook.com/share/1BiaRAkzJ5/?mibextid=wwXIfr" target="_blank"
+                            class="font-bold underline hover:text-white transition-colors">@AvrilWriters</a></p>
+                    <div
+                        class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6 opacity-80 grayscale hover:grayscale-0 transition-all duration-500">
+                        <span class="font-bold text-white/50 text-sm w-full lg:w-auto text-center lg:text-left">TRUSTED
+                            BY STUDENTS FROM:</span>
+                        <span class="font-bold text-white">Chamberlain</span>
+                        <span class="font-bold text-white">Capella</span>
+                        <span class="font-bold text-white">WGU</span>
+                        <span class="font-bold text-white">Stenberg</span>
+                    </div>
+                </div>
+                <aside class="w-full max-w-md lg:w-1/2">
+                    <div
+                        class="bg-slate-50/95 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/50 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent"></div>
+                        <h4 class="font-bold text-2xl mb-1 text-gray-800">Study Guide Pricing</h4>
+                        <p class="text-gray-500 text-sm mb-6">Select a guide to view the fixed price.</p>
+                        <form id="calcForm" onsubmit="return false;" class="space-y-4">
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label class="text-xs font-bold text-gray-500 uppercase">Select Study
+                                        Guide/Service</label>
+                                    <select id="type"
+                                        class="w-full mt-1 border-gray-200 rounded-lg p-3 bg-white focus:ring-2 focus:ring-primary focus:border-primary transition outline-none font-medium">
+                                        <option value="0">Select Service...</option>
+                                        <option value="100">ATI TEAS</option>
+                                        <option value="100">GED</option>
+                                        <option value="100">HESI A2</option>
+                                        <option value="75">HESI RN Fundamentals</option>
+                                        <option value="100">HESI Med Surg 1</option>
+                                        <option value="100">HESI RN Exit</option>
+                                        <option value="100">ATI RN Leadership</option>
+                                        <option value="0">--- Other Services ---</option>
+                                        <option value="150">Proctored Exams (From)</option>
+                                        <option value="500">Online Classes (Weekly From)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+                                <div>
+                                    <span class="block text-xs text-gray-400 font-semibold uppercase">Fixed Price
+                                        Estimate</span>
+                                    <div id="calcResult" class="font-extrabold text-primary text-3xl tracking-tight">
+                                        $0.00</div>
+                                </div>
+                                <a href="/guides" id="calcBtn"
+                                    class="bg-gray-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-primary transition-colors duration-300 shadow-lg text-sm flex items-center justify-center">View
+                                    Price</a>
+                            </div>
+                        </form>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="guarantees" class="py-16 bg-slate-50">
+            <div class="container mx-auto text-center px-4">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-slate-900">Our Guarantees</h2>
+                <p class="text-slate-500 max-w-xl mx-auto mb-12">What you can always expect when working with
+                    AvrilWriters.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-slate-100">
+                        <div
+                            class="h-14 w-14 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
+                            🔒</div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-800">100% Confidentiality</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">Information about customers is confidential
+                            and never disclosed.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-slate-100">
+                        <div
+                            class="h-14 w-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
+                            ⏰</div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-800">Timely Delivery</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">No missed deadlines – All assignments are
+                            completed in time.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-slate-100">
+                        <div
+                            class="h-14 w-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
+                            ✨</div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-800">Original Writing</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">We complete all papers from scratch with Plag
+                            & AI reports.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-slate-100">
+                        <div
+                            class="h-14 w-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
+                            💰</div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-800">Money Back</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">If requirements aren't met, you may request a
+                            refund.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-24 bg-slate-900">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">Our Services</h2>
+                <p class="text-blue-100/80 max-w-2xl mx-auto mb-16 text-lg">Tailored support for nursing students. We
+                    focus on clarity, accuracy, and helping you pass.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div
+                        class="group hover-card bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 cursor-pointer text-left">
+                        <div
+                            class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-primary text-2xl mb-6 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white shadow-sm">
+                            🛡️</div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                            Proctored Exams</h3>
+                        <p class="text-slate-500 leading-relaxed mb-4">Secure, expert support for all major proctoring
+                            platforms including Proctorio and Respondus.</p>
+                        <button
+                            class="text-primary font-bold text-sm inline-flex items-center focus:outline-none toggle-platform hover:underline"
+                            data-target="list-proctored">View All Platforms ▼</button>
+                        <ul id="list-proctored"
+                            class="mt-4 hidden text-sm text-slate-600 space-y-1 border-t border-slate-100 pt-3">
+                            {% for item in proctoredExams %}<li><a href="/login"
+                                    class="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-all flex items-center gap-2 group/item"><span
+                                        class="w-1.5 h-1.5 rounded-full bg-blue-300 group-hover/item:bg-primary transition-colors"></span>{{
+                                    item.name }}</a></li>{% endfor %}
+                        </ul>
+                    </div>
+                    <div
+                        class="group hover-card bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 cursor-pointer text-left">
+                        <div
+                            class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-primary text-2xl mb-6 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white shadow-sm">
+                            💻</div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                            Online Exams</h3>
+                        <p class="text-slate-500 leading-relaxed mb-4">Comprehensive exam preparation and support for
+                            HESI, TEAS, and other entrance exams.</p>
+                        <button
+                            class="text-primary font-bold text-sm inline-flex items-center focus:outline-none toggle-platform hover:underline"
+                            data-target="list-online-exams">View All Exams ▼</button>
+                        <ul id="list-online-exams"
+                            class="mt-4 hidden text-sm text-slate-600 space-y-1 border-t border-slate-100 pt-3">
+                            {% for item in onlineExams %}<li><a href="/login"
+                                    class="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-all flex items-center gap-2 group/item"><span
+                                        class="w-1.5 h-1.5 rounded-full bg-blue-300 group-hover/item:bg-primary transition-colors"></span>{{
+                                    item.name }}</a></li>{% endfor %}
+                        </ul>
+                    </div>
+                    <div
+                        class="group hover-card bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 cursor-pointer text-left">
+                        <div
+                            class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-primary text-2xl mb-6 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white shadow-sm">
+                            📚</div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                            ATI / VATI Modules</h3>
+                        <p class="text-slate-500 leading-relaxed mb-4">Complete assistance with nursing education
+                            modules to ensure you stay on track.</p>
+                        <button
+                            class="text-primary font-bold text-sm inline-flex items-center focus:outline-none toggle-platform hover:underline"
+                            data-target="list-ati">View All Modules ▼</button>
+                        <ul id="list-ati"
+                            class="mt-4 hidden text-sm text-slate-600 space-y-1 border-t border-slate-100 pt-3">
+                            {% for item in atiModules %}<li><a href="/login"
+                                    class="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-all flex items-center gap-2 group/item"><span
+                                        class="w-1.5 h-1.5 rounded-full bg-blue-300 group-hover/item:bg-primary transition-colors"></span>{{
+                                    item.name }}</a></li>{% endfor %}
+                        </ul>
+                    </div>
+                    <div
+                        class="group hover-card bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 cursor-pointer text-left">
+                        <div
+                            class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-primary text-2xl mb-6 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white shadow-sm">
+                            🎓</div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                            Online Classes</h3>
+                        <p class="text-slate-500 leading-relaxed mb-4">Full semester support for Canvas, Blackboard, and
+                            other learning management systems.</p>
+                        <button
+                            class="text-primary font-bold text-sm inline-flex items-center focus:outline-none toggle-platform hover:underline"
+                            data-target="list-classes">View Platforms ▼</button>
+                        <ul id="list-classes"
+                            class="mt-4 hidden text-sm text-slate-600 space-y-1 border-t border-slate-100 pt-3">
+                            {% for item in onlineClasses %}<li><a href="/login"
+                                    class="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-all flex items-center gap-2 group/item"><span
+                                        class="w-1.5 h-1.5 rounded-full bg-blue-300 group-hover/item:bg-primary transition-colors"></span>{{
+                                    item.name }}</a></li>{% endfor %}
+                        </ul>
+                    </div>
+                    <div
+                        class="group hover-card bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 cursor-pointer text-left">
+                        <div
+                            class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-primary text-2xl mb-6 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white shadow-sm">
+                            ✍️</div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                            Essays & Papers</h3>
+                        <p class="text-slate-500 leading-relaxed">Plagiarism-free, well-researched nursing papers
+                            formatted in APA style.</p>
+                        <div class="mt-4 pt-3 border-t border-slate-100">
+                            <a href="/login"
+                                class="text-sm font-bold text-primary hover:underline flex items-center gap-1">Start an
+                                Essay <span class="text-lg">→</span></a>
+                        </div>
+                    </div>
+                    <div
+                        class="group hover-card bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 cursor-pointer text-left">
+                        <div
+                            class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-primary text-2xl mb-6 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white shadow-sm">
+                            📝</div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                            Exam Study Guides (Q/A)</h3>
+                        <p class="text-slate-500 leading-relaxed">Q/A study guides for HESI and TEAS written to maximize
+                            your score.</p>
+                        <div class="mt-4 pt-3 border-t border-slate-100">
+                            <a href="/login"
+                                class="text-sm font-bold text-primary hover:underline flex items-center gap-1">Get Study
+                                Guide <span class="text-lg">→</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how" class="py-24 bg-slate-50 relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Process</span>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">How It Works</h2>
+                    <p class="text-lg text-slate-600 leading-relaxed">Getting expert nursing help is simple and secure.
+                        We guide you from request to success in four easy steps.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div
+                        class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                        <span
+                            class="absolute -top-4 -right-4 text-8xl font-serif font-bold text-slate-100 group-hover:text-blue-50 transition-colors select-none z-0">01</span>
+                        <div class="relative z-10">
+                            <div
+                                class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors shadow-sm">
+                                📝</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Share Your Needs</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">Tell us about your exam, class, or
+                                assignment. Include platform details, deadlines, and specific requirements.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                        <span
+                            class="absolute -top-4 -right-4 text-8xl font-serif font-bold text-slate-100 group-hover:text-blue-50 transition-colors select-none z-0">02</span>
+                        <div class="relative z-10">
+                            <div
+                                class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors shadow-sm">
+                                🤝</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Get Matched</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">We'll connect you with a nursing specialist
+                                experienced in your specific area and academic level.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                        <span
+                            class="absolute -top-4 -right-4 text-8xl font-serif font-bold text-slate-100 group-hover:text-blue-50 transition-colors select-none z-0">03</span>
+                        <div class="relative z-10">
+                            <div
+                                class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors shadow-sm">
+                                💻</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Receive Support</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">Get comprehensive help with exam prep,
+                                class modules, or assignments delivered directly to you.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                        <span
+                            class="absolute -top-4 -right-4 text-8xl font-serif font-bold text-slate-100 group-hover:text-green-50 transition-colors select-none z-0">04</span>
+                        <div class="relative z-10">
+                            <div
+                                class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center text-accent text-2xl mb-6 group-hover:bg-accent group-hover:text-white transition-colors shadow-sm">
+                                🏆</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Achieve Success</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">Excel in your nursing studies with our
+                                proven tutoring support and secure better grades.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-16 text-center">
+                    <a href="/place-order-social"
+                        class="group relative overflow-hidden inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-primary rounded-full shadow-xl shadow-blue-900/30 hover:bg-blue-700 hover:shadow-blue-900/50 hover:-translate-y-1">
+                        <span class="relative z-10 flex items-center">Start Your Order Now<svg
+                                class="w-5 h-5 ml-2 -mr-1 transition-transform group-hover:translate-x-1" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg></span>
+                        <div
+                            class="absolute inset-0 -translate-x-full group-hover:animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent z-0">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="results" class="py-20 bg-slate-950">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Evidence</span>
+                    <h2 class="text-3xl md:text-4xl font-serif text-white font-bold text-slate-900 mb-4">Proven Exam
+                        Results</h2>
+                    <p class="text-lg text-white text-slate-600 max-w-2xl mx-auto">We don't just promise results; we
+                        deliver them. Check out recent scores from our students.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div
+                        class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 aspect-[4/3] cursor-zoom-in">
+                        <img src="/images/score5.jpeg" alt="Examplify Score 97%"
+                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div class="text-white">
+                                <p class="font-bold text-lg">Examplify Exam</p>
+                                <p class="text-green-300 font-mono">Score: 97.33%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 aspect-[4/3] cursor-zoom-in">
+                        <img src="/images/score4.jpeg" alt="HESI A2 Score 94%"
+                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div class="text-white">
+                                <p class="font-bold text-lg">HESI A2</p>
+                                <p class="text-green-300 font-mono">Score: 94.0%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 aspect-[4/3] cursor-zoom-in">
+                        <img src="/images/score2.jpeg" alt="NCCT Score 98%"
+                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div class="text-white">
+                                <p class="font-bold text-lg">NCCT Exam</p>
+                                <p class="text-green-300 font-mono">Score: 98.0%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 aspect-[4/3] cursor-zoom-in">
+                        <img src="/images/score6.jpeg" alt="BADNAP Score 94%"
+                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div class="text-white">
+                                <p class="font-bold text-lg">BADNAP Exam</p>
+                                <p class="text-green-300 font-mono">Score: 94.93%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 aspect-[4/3] cursor-zoom-in">
+                        <img src="/images/score7.jpeg" alt="GRE Score"
+                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div class="text-white">
+                                <p class="font-bold text-lg">GRE Exam</p>
+                                <p class="text-green-300 font-mono">Score: 98.0%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 aspect-[4/3] cursor-zoom-in">
+                        <img src="/images/score8.jpeg" alt="HESI Exam"
+                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div class="text-white">
+                                <p class="font-bold text-lg">HESI Exam</p>
+                                <p class="text-green-300 font-mono">Score: 94.0%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="chats" class="py-20 bg-slate-50 border-t border-slate-200">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">Real Student Conversations
+                    </h2>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">Unfiltered feedback from our WhatsApp and chat
+                        logs.</p>
+                </div>
+                <div class="relative group">
+                    <button id="scrollLeftBtn"
+                        class="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 -ml-5 w-12 h-12 bg-white text-primary rounded-full shadow-lg items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-slate-50 focus:outline-none"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg></button>
+                    <div id="chatCarousel"
+                        class="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory no-scrollbar scroll-smooth">
+                        <div
+                            class="min-w-[280px] md:min-w-[320px] snap-center bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden aspect-[9/16]">
+                            <img src="/images/chat5.jpeg" alt="Student Feedback" class="h-full w-full object-cover">
+                        </div>
+                        <div
+                            class="min-w-[280px] md:min-w-[320px] snap-center bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden aspect-[9/16]">
+                            <img src="/images/chat7.jpeg" alt="Student Feedback" class="h-full w-full object-cover">
+                        </div>
+                        <div
+                            class="min-w-[280px] md:min-w-[320px] snap-center bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden aspect-[9/16]">
+                            <img src="/images/chat3.jpeg" alt="Student Feedback" class="h-full w-full object-cover">
+                        </div>
+                        <div
+                            class="min-w-[280px] md:min-w-[320px] snap-center bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden aspect-[9/16]">
+                            <img src="/images/chat4.jpeg" alt="Student Feedback" class="h-full w-full object-cover">
+                        </div>
+                        <div
+                            class="min-w-[280px] md:min-w-[320px] snap-center bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden aspect-[9/16] flex items-center justify-center bg-slate-100">
+                            <img src="/images/chat9.jpeg" alt="Student Feedback" class="h-full w-full object-cover">
+                        </div>
+                        <div
+                            class="min-w-[280px] md:min-w-[320px] snap-center bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden aspect-[9/16] flex items-center justify-center bg-slate-100">
+                            <img src="/images/chat10.jpeg" alt="Student Feedback" class="h-full w-full object-cover">
+                        </div>
+                        <div
+                            class="min-w-[280px] md:min-w-[320px] snap-center bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden aspect-[9/16] flex items-center justify-center bg-slate-100">
+                            <img src="/images/chat11.jpeg" alt="Student Feedback" class="h-full w-full object-cover">
+                        </div>
+                    </div>
+                    <button id="scrollRightBtn"
+                        class="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 -mr-5 w-12 h-12 bg-white text-primary rounded-full shadow-lg items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-slate-50 focus:outline-none"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="py-20 bg-slate-900">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">What Students Say</h2>
+                <div class="relative max-w-5xl mx-auto overflow-hidden">
+                    <div class="flex transition-transform duration-500 ease-in-out carousel-track">
+                        <div class="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 px-3 mb-4">
+                            <div
+                                class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 flex flex-col items-center h-full">
+                                <div
+                                    class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-3xl mb-6">
+                                    👩‍⚕️</div>
+                                <p class="text-slate-600 italic mb-6 text-center flex-grow leading-relaxed">"She passed
+                                    my ATI TEAS with a 96%. Definitely recommend!"</p>
+                                <h4 class="text-primary font-bold text-center">— Sarah N., Nursing Student</h4>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 px-3 mb-4">
+                            <div
+                                class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 flex flex-col items-center h-full">
+                                <div
+                                    class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl mb-6">
+                                    👨‍⚕️</div>
+                                <p class="text-slate-600 italic mb-6 text-center flex-grow leading-relaxed">"Handled my
+                                    Examplify exam and scored 98%. Now I don't have to repeat the class!"</p>
+                                <h4 class="text-primary font-bold text-center">— Michael K., BSN Student</h4>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 px-3 mb-4">
+                            <div
+                                class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 flex flex-col items-center h-full">
+                                <div
+                                    class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-3xl mb-6">
+                                    🎓</div>
+                                <p class="text-slate-600 italic mb-6 text-center flex-grow leading-relaxed">"Delivered a
+                                    330 score on my GRE exam. I definitely recommend AvrilWriters."</p>
+                                <h4 class="text-primary font-bold text-center">— Chinwe O., Graduate Student</h4>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 px-3 mb-4">
+                            <div
+                                class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 flex flex-col items-center h-full">
+                                <div
+                                    class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center text-3xl mb-6">
+                                    📚</div>
+                                <p class="text-slate-600 italic mb-6 text-center flex-grow leading-relaxed">"Finished my
+                                    Anatomy class with a 94%. Definitely recommend!"</p>
+                                <h4 class="text-primary font-bold text-center">— Jessica M., Pre-Nursing</h4>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 px-3 mb-4">
+                            <div
+                                class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 flex flex-col items-center h-full">
+                                <div
+                                    class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-3xl mb-6">
+                                    🎓</div>
+                                <p class="text-slate-600 italic mb-6 text-center flex-grow leading-relaxed">"I took all
+                                    my GED exams with her help and passed with distinction!"</p>
+                                <h4 class="text-primary font-bold text-center">— David R., GED Student</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center gap-3 mt-8">
+                        <button class="dot w-3 h-3 rounded-full bg-primary transition-all"></button>
+                        <button
+                            class="dot w-3 h-3 rounded-full bg-slate-600 transition-all hover:bg-primary/50"></button>
+                        <button
+                            class="dot w-3 h-3 rounded-full bg-slate-600 transition-all hover:bg-primary/50"></button>
+                        <button
+                            class="dot w-3 h-3 rounded-full bg-slate-600 transition-all hover:bg-primary/50"></button>
+                        <button
+                            class="dot w-3 h-3 rounded-full bg-slate-600 transition-all hover:bg-primary/50"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="py-20 bg-blue-50 border-t border-blue-100">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-2xl md:text-3xl font-serif font-bold text-slate-900 mb-10">Trusted by Students</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center hover:-translate-y-1 transition-all">
+                        <h3 class="text-lg font-bold text-slate-700">Google Reviews</h3>
+                        <div class="flex gap-1 text-yellow-400 text-xl my-3">★★★★★</div>
+                        <p class="text-slate-500 font-medium">4.9/5 Average Rating</p>
+                    </div>
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center hover:-translate-y-1 transition-all">
+                        <h3 class="text-lg font-bold text-slate-700">Sitejabber</h3>
+                        <div class="flex gap-1 text-yellow-400 text-xl my-3">★★★★★</div>
+                        <p class="text-slate-500 font-medium">4.8/5 Average Rating</p>
+                    </div>
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center hover:-translate-y-1 transition-all">
+                        <h3 class="text-lg font-bold text-slate-700">Trustpilot</h3>
+                        <div class="flex gap-1 text-yellow-400 text-xl my-3">★★★★★</div>
+                        <p class="text-slate-500 font-medium">4.9/5 Average Rating</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <img src="{{ images.logo }}" alt="Logo" class="h-8 w-auto brightness-0 invert opacity-80">
+                        <span class="text-white font-bold text-xl tracking-wide">AvrilWriters</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">Your trusted partner for nursing academic success.
+                        We provide expert tutoring, exam prep, and writing assistance for students worldwide.</p>
+                    <div class="flex gap-4 pt-2">
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all"><svg
+                                class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg></a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all"><svg
+                                class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 1 0 7.75 6.82V9.17a7.18 7.18 0 0 0 4.12 1.48v-3.96z">
+                                </path>
+                            </svg></a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all"><svg
+                                class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke-width="2"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2"></line>
+                            </svg></a>
+                        <a href="https://api.whatsapp.com/send/?phone=15708136189&text&type=phone_number&app_absent=0"
+                            target="_blank"
+                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all"><svg
+                                class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z">
+                                </path>
+                            </svg></a>
+                    </div>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold uppercase tracking-wider text-sm mb-6 border-b border-gray-700 pb-2 inline-block">
+                        Services</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#services" class="hover:text-primary transition-colors">Proctored Exams</a></li>
+                        <li><a href="#services" class="hover:text-primary transition-colors">Online Classes</a></li>
+                        <li><a href="#services" class="hover:text-primary transition-colors">ATI VATI / LSVIU
+                                Modules</a></li>
+                        <li><a href="#services" class="hover:text-primary transition-colors">Nursing Exams Study
+                                Guides</a></li>
+                        <li><a href="#services" class="hover:text-primary transition-colors">Essay Writing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold uppercase tracking-wider text-sm mb-6 border-b border-gray-700 pb-2 inline-block">
+                        Company</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#how" class="hover:text-primary transition-colors">How it Works</a></li>
+                        <li><a href="#reviews" class="hover:text-primary transition-colors">Reviews</a></li>
+                        <li><a href="/login" class="hover:text-primary transition-colors">Login / Sign Up</a></li>
+                        <li><a href="/refund-policy" class="hover:text-primary transition-colors">Refund Policy</a></li>
+                        <li><a href="/privacy-policy" class="hover:text-primary transition-colors">Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold uppercase tracking-wider text-sm mb-6 border-b border-gray-700 pb-2 inline-block">
+                        Contact Us</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3"><span class="text-primary mt-1">✉️</span><a
+                                href="mailto:wanyamak20@gmail.com"
+                                class="hover:text-white transition">support@avrilwriters.com</a></li>
+                        <li class="flex items-start gap-3"><span class="text-primary mt-1">💬</span><a
+                                href="https://api.whatsapp.com/send/?phone=15708136189&text&type=phone_number&app_absent=0"
+                                class="hover:text-white transition">WhatsApp Support (24/7)</a></li>
+                        <li class="flex items-start gap-3"><span class="text-primary mt-1">📍</span><span>Los Angeles,
+                                CA</span></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-gray-800 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                <div class="text-center md:text-left">© 2025 AvrilWriters. All rights reserved.</div>
+                <div class="flex items-center gap-3 opacity-60 grayscale hover:grayscale-0 transition-all">
+                    <div class="h-6 w-auto bg-white rounded px-2 flex items-center justify-center"><span
+                            class="text-[10px] font-bold text-green-600">Paypal</span></div>
+                    <div class="h-6 w-auto bg-white rounded px-2 flex items-center justify-center"><span
+                            class="text-[10px] font-bold text-green-600">Credit / Debit Card</span></div>
+                    <div class="h-6 w-auto bg-white rounded px-2 flex items-center justify-center"><span
+                            class="text-[10px] font-bold text-orange-500">Zelle</span></div>
+                    <div class="h-6 w-auto bg-white rounded px-2 flex items-center justify-center"><span
+                            class="text-[10px] font-bold text-purple-600">Crypto</span></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. LOGIN STATUS CHECK ---
+        function checkLoginStatus() {
+            const user = localStorage.getItem('user');
+            const loginBtnDesktop = document.getElementById('loginBtnDesktop');
+            const logoutBtnDesktop = document.getElementById('logoutBtnDesktop');
+            const loginBtnMobile = document.getElementById('loginBtnMobile');
+            const logoutBtnMobile = document.getElementById('logoutBtnMobile');
+
+            if (user) {
+                if (loginBtnDesktop) loginBtnDesktop.classList.add('hidden');
+                if (logoutBtnDesktop) logoutBtnDesktop.classList.remove('hidden');
+                if (loginBtnMobile) loginBtnMobile.classList.add('hidden');
+                if (logoutBtnMobile) logoutBtnMobile.classList.remove('hidden');
+            } else {
+                if (logoutBtnDesktop) logoutBtnDesktop.classList.add('hidden');
+                if (logoutBtnMobile) logoutBtnMobile.classList.add('hidden');
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                await fetch('/api/logout', { method: 'POST' });
+                localStorage.removeItem('user');
+                window.location.reload();
+            } catch (err) {
+                console.error('Logout error:', err);
+                localStorage.removeItem('user');
+                window.location.reload();
+            }
+        }
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
+        // --- 2. MOBILE MENU TOGGLE ---
+        const btnMenu = document.getElementById('btnMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        btnMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- 3. PRICE CALCULATOR ---
+        const calcResult = document.getElementById('calcResult');
+        const type = document.getElementById('type');
+
+        function calculate() {
+            const price = Number(type.value);
+            if (price > 0) {
+                calcResult.textContent = '$' + price.toFixed(2);
+            } else {
+                calcResult.textContent = '$0.00';
+            }
+        }
+        if (type) { type.addEventListener('change', calculate); }
+        document.addEventListener('DOMContentLoaded', calculate);
+
+        // --- 4. TOGGLE LISTS ---
+        document.querySelectorAll('.toggle-platform').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-target');
+                const list = document.getElementById(targetId);
+                const isHidden = list.classList.contains('hidden');
+                list.classList.toggle('hidden', !isHidden);
+                button.textContent = isHidden ? button.textContent.replace('▼', '▲') : button.textContent.replace('▲', '▼');
+            });
+        });
+
+        // --- 5. TESTIMONIALS CAROUSEL ---
+        const track = document.querySelector('.carousel-track');
+        const slides = Array.from(track.children);
+        const dots = Array.from(document.querySelectorAll('.dot'));
+        let currentIndex = 0;
+
+        function updateCarousel(index) {
+            const slideWidth = slides[0].getBoundingClientRect().width;
+            track.style.transform = `translateX(-${slideWidth * index}px)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('bg-primary', i === index);
+                dot.classList.toggle('bg-slate-600', i !== index);
+            });
+        }
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel(currentIndex);
+        }, 4000);
+        window.addEventListener('resize', () => updateCarousel(currentIndex));
+
+        // --- 6. CHAT CAROUSEL LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('chatCarousel');
+            const leftBtn = document.getElementById('scrollLeftBtn');
+            const rightBtn = document.getElementById('scrollRightBtn');
+
+            if (carousel && leftBtn && rightBtn) {
+                const scrollAmount = 344;
+                leftBtn.addEventListener('click', () => { carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); });
+                rightBtn.addEventListener('click', () => { carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' }); });
+            }
+        });
+    </script>
+</body>
+
+</html>

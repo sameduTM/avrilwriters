@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Jobs — Writer Hub</title>
+    <link rel="icon" type="image/png" href="{{ images.logo }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { slate: { 850: '#1e293b', 900: '#0f172a' } } } } }
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-900 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-gray-400 h-full flex flex-col shadow-2xl flex-shrink-0">
+        <div class="h-16 flex items-center px-6 border-b border-gray-800 bg-slate-900">
+            <div class="flex items-center gap-3">
+                <img src="{{ images.logo }}" alt="Logo" class="h-8 w-auto brightness-0 invert">
+                <span class="text-white font-bold text-lg tracking-wide">Writer Hub</span>
+            </div>
+        </div>
+
+        <div class="p-6 border-b border-gray-800">
+            <div class="flex items-center gap-3">
+                <div
+                    class="h-10 w-10 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                    {{ (user.name or 'W') | first | upper }}
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold truncate w-32">{{ user.name }}</h4>
+                    <p class="text-xs text-purple-400 font-medium">Academic Tutor</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Workspace</p>
+
+            <a href="/writer/dashboard"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                    </path>
+                </svg>
+                <span class="font-medium">Dashboard</span>
+            </a>
+
+            <a href="/writer/available"
+                class="group flex items-center justify-between px-3 py-2.5 rounded-lg bg-purple-600 text-white shadow-lg shadow-purple-900/20 transition-all">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <span class="font-medium">Browse Jobs</span>
+                </div>
+            </a>
+
+            <a href="/writer/earnings"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                    </path>
+                </svg>
+                <span class="font-medium">Earnings</span>
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800 mt-auto">
+            <a href="/logout"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-purple-400 hover:bg-purple-400/10 hover:text-purple-300 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg>
+                <span class="font-medium">Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header
+            class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 flex-shrink-0">
+            <h1 class="text-xl font-bold text-gray-800">Available Orders ({{ orders.length }})</h1>
+            <div class="text-sm text-gray-500">Select an order to start working</div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-8 bg-gray-100">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for order in orders %}
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition flex flex-col h-full">
+
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">{{ order.pages }}
+                            Pages</span>
+                        <span class="text-lg font-bold text-green-600">${{ order.price }}</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-gray-900 mb-2 leading-tight">{{ order.title }}</h3>
+                    <p class="text-sm text-gray-500 mb-4">{{ order.type }} • {{ order.level }}</p>
+
+                    <div class="mt-auto pt-4 border-t border-gray-50">
+                        <div class="flex justify-between items-center text-sm text-gray-600 mb-4">
+                            <span>Deadline:</span>
+                            <span class="font-bold text-red-600">{{ order.deadline | date("MMM d, HH:mm") }}</span>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <a href="/writer/orders/{{ order._id }}" target="_blank"
+                                class="flex-1 py-2 text-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold text-sm transition">
+                                View
+                            </a>
+
+                            <form action="/writer/bid" method="POST" class="flex-1">
+                                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+                                <input type="hidden" name="orderId" value="{{ order._id }}">
+                                <button type="submit"
+                                    class="w-full py-2 rounded-lg bg-purple-600 text-white font-semibold text-sm hover:bg-purple-700 transition shadow-sm">
+                                    Claim Now
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-span-full flex flex-col items-center justify-center p-12 text-gray-400">
+                    <svg class="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                    <p class="text-lg">No new orders available right now.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>

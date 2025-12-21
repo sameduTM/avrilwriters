@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Server Error</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center text-center">
+    <div>
+        <h1 class="text-6xl font-bold text-red-600">500</h1>
+        <p class="text-xl text-gray-800 mt-2">Internal Server Error</p>
+        <p class="text-gray-500">Something went wrong. Please try again later.</p>
+        {% if error %}
+        <pre class="mt-4 p-4 bg-red-50 text-red-700 text-sm text-left overflow-auto max-w-lg">{{ error }}</pre>
+        {% endif %}
+        <a href="/" class="mt-4 inline-block bg-gray-800 text-white px-6 py-2 rounded">Go Home</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ images.logo }}">
+    <title>Nursing Study Guides (Q/A) — Tutorsonhenry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0056b3',
+                        accent: '#22a748',
+                        surface: '#f8fafc',
+                        muted: '#6c757d',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-sans text-slate-600 bg-slate-50 min-h-screen">
+
+    <header
+        class="sticky top-0 z-50 w-full transition-all duration-300 border-b border-slate-200 bg-slate-50/90 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+
+            <div class="flex items-center gap-3 group cursor-pointer pl-4">
+                <a href="/" class="transition-transform duration-300 group-hover:scale-105">
+                    <img src="{{ images.logo }}" alt="Logo" class="h-10">
+                </a>
+                <a href="/" class="flex flex-col">
+                    <span class="text-slate-800 font-bold text-xl tracking-tight leading-none">Tutorsonhenry</span>
+                    <span class="text-xs text-slate-500 font-medium tracking-wide">Nursing Excellence</span>
+                </a>
+            </div>
+
+            <nav class="hidden lg:flex items-center gap-8">
+                <a href="/"
+                    class="px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors">Back
+                    to Home</a>
+                <a href="/place-order"
+                    class="group relative overflow-hidden px-6 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold shadow-sm hover:bg-blue-700 transition-all duration-300">
+                    <span class="relative z-10">Place Order</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="bg-gray-900 text-white py-16 md:py-24 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-cover bg-center"
+            style="background-image: url('/images/background-guide.jpg');"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-3xl">
+            <h1 class="font-serif text-5xl md:text-6xl font-bold mb-4">Master Your Exams</h1>
+            <p class="text-xl text-blue-200/80 mb-6">Access our comprehensive Question & Answer study guides for HESI,
+                TEAS, and critical nursing topics.</p>
+            <p class="text-sm font-semibold text-white/70">Instant access after purchase. Guaranteed quality content.
+            </p>
+            <a href="#guide-list"
+                class="mt-8 inline-block bg-accent text-white px-8 py-3 rounded-full font-bold hover:bg-green-600 transition-all shadow-lg shadow-green-900/30">View
+                All Guides</a>
+        </div>
+    </section>
+
+    <section id="guide-list" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Our Fixed-Price Study Guides</h2>
+                <p class="text-lg text-slate-600">All guides are delivered digitally (Q/A format) immediately upon
+                    confirmation of payment.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+                {% macro guide_card(name, price, color, description) %}
+                <div
+                    class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-100 flex flex-col overflow-hidden transform hover:-translate-y-1">
+                    <div class="p-6 flex-grow">
+                        <div
+                            class="w-14 h-14 bg-{{ color }}-50 rounded-xl flex items-center justify-center text-3xl mb-4 text-{{ color }}-600">
+                            📚
+                        </div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-2">{{ name }}</h3>
+                        <p class="text-slate-500 text-sm mb-4">{{ description }}</p>
+
+                        <div class="inline-block px-3 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-700">
+                            Q/A Format
+                        </div>
+                    </div>
+
+                    <div class="mt-auto p-6 border-t border-slate-100 flex justify-between items-center bg-slate-50">
+                        <span class="text-2xl font-bold text-primary">${{ price }}</span>
+                        <a href="/place-order"
+                            class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">Buy
+                            Now</a>
+                    </div>
+                </div>
+                {% endmacro %}
+                {{ guide_card("ATI TEAS", "100.00", "blue", "Essential Q&A material covering all four sections: Reading,
+                Math, Science, and English.") }}
+                {{ guide_card("HESI A2", "100.00", "pink", "Full subject review for admission tests, including Grammar,
+                Biology, and A&P.") }}
+                {{ guide_card("HESI Med Surg 1", "100.00", "red", "Targeted questions and answers for Medical-Surgical
+                Nursing, focusing on key conditions.") }}
+                {{ guide_card("ATI RN Leadership", "100.00", "purple", "Study guide focused on management, delegation,
+                prioritization, and ethical/legal issues.") }}
+                {{ guide_card("GED", "100.00", "yellow", "Comprehensive preparation guides to ensure a passing score on
+                all four GED subject tests.") }}
+                {{ guide_card("HESI RN Exit", "100.00", "green", "Critical review guide designed to prepare you for
+                passing the HESI Exit exam the first time.") }}
+                {{ guide_card("HESI RN Fundamentals", "75.00", "indigo", "Core concepts, safety, patient care, and skill
+                procedures. Highly focused review.") }}
+                <div
+                    class="flex items-center justify-center p-6 text-center text-slate-500 border-2 border-dashed border-slate-200 rounded-2xl h-full">
+                    <p class="text-lg font-semibold">Looking for something else? <a href="/place-order"
+                            class="text-primary hover:underline">Start a custom order.</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Tutorsonhenry. All rights reserved. | <a href="/refund-policy"
+                    class="hover:text-white">Refund Policy</a></p>
+        </div>
+    </footer>
+</body>
+
+</html>
