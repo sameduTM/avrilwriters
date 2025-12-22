@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" class="overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} — AvrilWriters</title>
+    <link rel="icon" type="image/png" href="{{ images.favicon }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { primary: '#0056b3', accent: '#22a748' }, fontFamily: { sans: ['Inter'], serif: ['Playfair Display'] } } } }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+
+<body class="font-sans text-slate-600 bg-white w-full max-w-[100vw]">
+
+    <header class="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-slate-800 font-bold text-xl">AvrilWriters</a>
+            <a href="/blog" class="text-sm font-bold text-primary hover:underline">← Back to Blog</a>
+        </div>
+    </header>
+
+    <article class="max-w-3xl mx-auto px-6 py-20">
+        <header class="mb-10 text-center">
+            <span class="text-primary font-bold tracking-wider uppercase text-sm">{{ post.category }}</span>
+            <h1 class="font-serif text-3xl md:text-5xl font-bold text-slate-900 mt-3 mb-6 leading-tight">
+                {{ post.title }}
+            </h1>
+            <p class="text-slate-500 italic">By AvrilWriters Team • {{ post.date.toDateString() }}</p>
+        </header>
+
+        <div class="prose prose-lg prose-slate mx-auto leading-relaxed space-y-6 text-slate-700">
+            {{ post.content | safe }}
+        </div>
+        
+        <div class="mt-16 pt-8 border-t border-slate-200 text-center">
+             <h4 class="font-bold text-xl text-slate-900 mb-2">Need help with this topic?</h4>
+             <p class="mb-6">Our expert tutors are ready to assist.</p>
+             <a href="/place-order-social" class="inline-block bg-primary text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition">Get Help Now</a>
+        </div>
+    </article>
+
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 AvrilWriters. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

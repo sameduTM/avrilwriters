@@ -22,6 +22,7 @@ const paymentRouter = require('./routes/paymentRoute');
 const adminRouter = require('./routes/adminRoute');
 const writerRouter = require('./routes/writerRoute');
 const messageRouter = require('./routes/messageRoute');
+const blogRouter = require('./routes/blogRoute');
 
 // --- ENV CHECK ---
 if (!process.env.SESSION_SECRET) {
@@ -114,6 +115,7 @@ app.use(messageRouter);
 app.use(orderRouter);
 app.use(paymentRouter);
 app.use(userRouter); // Usually handles "/" so keep it last or ensure it doesn't block others
+app.use(blogRouter);
 
 // --- ERROR HANDLING ---
 app.use((req, res) => {

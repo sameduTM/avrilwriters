@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ post.title }} — AvrilWriters</title>
+</head>
+
+<body>
+    <article class="max-w-3xl mx-auto px-6 py-20">
+        <header class="mb-10 text-center">
+            <span class="text-primary font-bold tracking-wider uppercase text-sm">{{ post.category }}</span>
+
+            <h1 class="font-serif text-4xl md:text-5xl font-bold text-slate-900 mt-3 mb-6 leading-tight">
+                {{ post.title }}
+            </h1>
+            <p class="text-slate-500 italic">By AvrilWriters Team • {{ post.date.toDateString() }}</p>
+        </header>
+
+        <div class="prose prose-lg prose-slate mx-auto leading-relaxed space-y-6 text-slate-700">
+            {{ post.content | safe }}
+        </div>
+    </article>
+
+</body>
+
+</html>

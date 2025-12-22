@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{{ images.logo }}">
-    <title>Place Order — Tutorsonhenry</title>
+    <title>Place Order — AvrilWriters</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -30,7 +30,7 @@
         <div class="h-16 flex items-center px-6 border-b border-gray-800 bg-slate-900">
             <a href="/" class="flex items-center gap-3">
                 <img src="{{ images.logo }}" alt="Logo" class="h-8 w-auto brightness-0 invert">
-                <span class="text-white font-bold text-lg tracking-wide">Tutorsonhenry</span>
+                <span class="text-white font-bold text-lg tracking-wide">AvrilWriters</span>
             </a>
             <button id="closeSidebarBtn" class="md:hidden ml-auto text-gray-400 hover:text-white">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,7 +220,7 @@
                                 <span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded border border-green-500/30">Ready to Send</span>
                             </div>
                             <div class="font-mono text-sm leading-relaxed text-gray-300">
-                                <p>Hi TutorsOnHenry,</p>
+                                <p>Hi AvrilWriters,</p>
                                 <p class="mt-2">I'd like to place an order.</p>
                                 <div class="my-3 pl-3 border-l-2 border-blue-600">
                                     <p><strong class="text-white">Subject:</strong> <span id="prev-subject" class="text-blue-300">...</span></p>
@@ -348,7 +348,7 @@
         // CONTACT INFO CONSTANTS
         const PHONE_NUMBER = "14072562717"; // Your WhatsApp Number
         const EMAIL_ADDRESS = "prowriters1967@gmail.com";
-        const INSTAGRAM_HANDLE = "tutorsonhenry";
+        const INSTAGRAM_HANDLE = "avrilwriters";
 
         function updatePreview() {
             const subject = document.getElementById('subject').value || '...';
@@ -369,7 +369,7 @@
             const instructions = document.getElementById('instructions').value;
 
             // Base text with line breaks encoded
-            return `Hi TutorsOnHenry, I'd like to place an order.\n\n*Subject:* ${subject}\n*Level:* ${level}\n*Due Date:* ${deadline}\n\n*Instructions:* ${instructions}\n\nPlease give me a quote.`;
+            return `Hi AvrilWriters, I'd like to place an order.\n\n*Subject:* ${subject}\n*Level:* ${level}\n*Due Date:* ${deadline}\n\n*Instructions:* ${instructions}\n\nPlease give me a quote.`;
         }
 
         function sendOrderViaApp() {
