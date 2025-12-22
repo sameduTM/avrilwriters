@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editor — AvrilWriters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-900 h-screen flex flex-col">
+
+    <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 flex-shrink-0">
+        <div class="flex items-center gap-4">
+            <a href="/writer/blog" class="text-gray-500 hover:text-purple-600 transition">← Back</a>
+            <h1 class="text-xl font-bold text-gray-800">{{ 'Edit Article' if post else 'New Article' }}</h1>
+        </div>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-8">
+        <div class="max-w-4xl mx-auto">
+            <form action="{{ '/writer/blog/update/' + post._id if post else '/writer/blog/create' }}" method="POST"
+                class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 space-y-6">
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Article Title</label>
+                    <input type="text" name="title" value="{{ post.title }}" required
+                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Slug (URL)</label>
+                        <input type="text" name="slug" value="{{ post.slug }}" placeholder="e.g. how-to-pass-teas"
+                            required
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition font-mono text-sm">
+                        <p class="text-xs text-gray-400 mt-1">Lowercase, use hyphens, unique.</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Category</label>
+                        <input type="text" name="category" value="{{ post.category }}" placeholder="e.g. Study Tips"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Icon (Emoji)</label>
+                        <input type="text" name="imageIcon" value="{{ post.imageIcon }}" placeholder="📚"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition text-center text-xl">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Short Summary</label>
+                        <input type="text" name="summary" value="{{ post.summary }}"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Content (HTML Supported)</label>
+                    <textarea name="content" rows="15"
+                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition font-mono text-sm leading-relaxed"
+                        placeholder="<p>Start writing...</p>">{{ post.content }}</textarea>
+                    <div class="mt-2 text-xs text-gray-500 flex gap-4">
+                        <span>Use &lt;h2&gt; for headers</span>
+                        <span>Use &lt;p&gt; for paragraphs</span>
+                        <span>Use &lt;ul&gt;&lt;li&gt; for lists</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex items-center justify-end gap-4 border-t border-gray-100">
+                    <a href="/writer/blog"
+                        class="px-6 py-2.5 rounded-lg text-gray-500 hover:bg-gray-100 font-bold transition">Cancel</a>
+                    <button type="submit"
+                        class="bg-purple-600 text-white px-8 py-2.5 rounded-lg font-bold hover:bg-purple-700 shadow-lg shadow-purple-500/30 transition">
+                        {{ 'Update Article' if post else 'Publish Article' }}
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

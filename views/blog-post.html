@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="overflow-x-hidden">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,9 @@
     <script>
         tailwind.config = { theme: { extend: { colors: { primary: '#0056b3', accent: '#22a748' }, fontFamily: { sans: ['Inter'], serif: ['Playfair Display'] } } } }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body class="font-sans text-slate-600 bg-white w-full max-w-[100vw]">
@@ -33,11 +36,22 @@
         <div class="prose prose-lg prose-slate mx-auto leading-relaxed space-y-6 text-slate-700">
             {{ post.content | safe }}
         </div>
-        
+
         <div class="mt-16 pt-8 border-t border-slate-200 text-center">
-             <h4 class="font-bold text-xl text-slate-900 mb-2">Need help with this topic?</h4>
-             <p class="mb-6">Our expert tutors are ready to assist.</p>
-             <a href="/place-order-social" class="inline-block bg-primary text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition">Get Help Now</a>
+            <h4 class="font-bold text-xl text-slate-900 mb-2">Need help with this topic?</h4>
+            <p class="mb-6">Our expert tutors are ready to assist.</p>
+            <a href="/place-order-social"
+                class="inline-block bg-primary text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition">Get
+                Help Now</a>
+        </div>
+        <div class="my-8 p-6 bg-orange-50 border-l-4 border-orange-500 rounded-r-lg">
+            <h4 class="font-bold text-lg text-orange-800 mb-2">🎁 Free Gift for Readers</h4>
+            <p class="text-orange-700 text-sm mb-4">Don't start from scratch. Get our summarized HESI terms list for
+                free.</p>
+            <a href="https://wa.me/15708136189?text=Hi%2C%20I%20read%20your%20blog%20and%20want%20the%20Free%20Cheat%20Sheet."
+                class="inline-flex items-center gap-2 bg-orange-500 text-white px-5 py-2 rounded-lg font-bold text-sm hover:bg-orange-600 transition">
+                Download PDF Now
+            </a>
         </div>
     </article>
 
@@ -47,4 +61,5 @@
         </div>
     </footer>
 </body>
+
 </html>

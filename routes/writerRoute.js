@@ -2,6 +2,7 @@ const express = require('express');
 const Order = require('../models/orders');
 const { requireWriter } = require('../middlewares/roleAuth'); // Ensure this matches your export name (requireTutor or requireWriter)
 const MessageService = require('../services/messageService');
+const Post = require('../models/post');
 
 const writerRouter = express.Router();
 
@@ -12,6 +13,91 @@ const IMAGE_PATHS = {
     logo: '/images/medical-team.png',
     hero: '',
 }
+
+// ==========================================
+// BLOG MANAGEMENT ROUTES
+// ==========================================
+
+// 1. LIST all blog posts
+writerRouter.get('/blog', async (req, res) => {
+    try {
+        const posts = await Post.find({}).sort({ date: -1 });
+        res.render('writer/blog-list.html', {
+            posts,
+            user: req.session.user,
+            images: IMAGE_PATHS,
+        });
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Could not load blod posts');
+        res.redirect('/writer/dashboard');
+    }
+});
+
+// 2. SHOW CREATE FORM
+writerRouter.get('/blog/new', (req, res) => {
+    res.render('writer/blog-editor.html', {
+        post: null,
+        user: req.session.user,
+    });
+});
+
+// 3. SHOW EDIT FORM
+writerRouter.get('/blog/edit/:id', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            req.flash('error', 'Post not found');
+            return res.redirect('/writer/blog');
+        }
+        res.render('writer/blog-editor.html', {
+            post,
+            user: req.session.user,
+        });
+    } catch (err) {
+        console.error('Post Not Found Error:', err);
+        req.flash('error', 'Invalid Post ID');
+        res.redirect('/writer/blog');
+    }
+});
+
+// 4. CREATE POST
+writerRouter.post('/blog/create', async (req, res) => {
+    try {
+        await Post.create(req.body);
+        req.flash('success', 'Article published successfully!');
+        res.redirect('/writer/blog');
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Error creating post (Slug might be duplicate)');
+        res.redirect('/writer/blog/new');
+    }
+});
+
+// 5. UPDATE POST
+writerRouter.post('/blog/update/:id', async (req, res) => {
+    try {
+        await Post.findByIdAndUpdate(req.params.id, req.body);
+        req.flash('success', 'Article updated!');
+        res.redirect('/writer/blog');
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Update failed');
+        res.redirect('/writer/blog');
+    }
+});
+
+// 6. DELETE POST
+writerRouter.post('/blog/delete/:id', async (req, res) => {
+    try {
+        await Post.findByIdAndDelete(req.params.id);
+        req.flash('success', 'Article deleted');
+        res.redirect('/writer/blog');
+    } catch (err) {
+        req.flash('error', 'Delete failed');
+        res.redirect('/writer/blog');
+    }
+});
 
 // GET: Writer Dashboard
 writerRouter.get('/dashboard', async (req, res) => {

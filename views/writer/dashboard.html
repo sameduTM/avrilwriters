@@ -51,6 +51,16 @@
                 <span class="font-medium">Dashboard</span>
             </a>
 
+            <a href="/writer/blog"
+                class="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
+                    </path>
+                </svg>
+                <span class="font-medium">Blog Posts</span>
+            </a>
+
             <a href="/writer/available"
                 class="group flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
                 <div class="flex items-center gap-3">
@@ -185,7 +195,8 @@
                                 <span class="font-bold text-purple-600">{{ stats.successRate }}%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-purple-600 h-2 rounded-full" style="width: {{ stats.successRate }}%"></div>
+                                <div class="bg-purple-600 h-2 rounded-full" style="width: {{ stats.successRate }}%">
+                                </div>
                             </div>
                         </div>
                         <div class="flex justify-between items-center text-sm">
@@ -200,10 +211,12 @@
                         <h3 class="text-sm font-bold text-gray-600 uppercase tracking-wider">Quick Actions</h3>
                     </div>
                     <div class="space-y-2">
-                        <a href="/writer/available" class="block w-full text-center px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 font-bold text-sm transition">
+                        <a href="/writer/available"
+                            class="block w-full text-center px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 font-bold text-sm transition">
                             Browse Jobs
                         </a>
-                        <a href="/writer/earnings" class="block w-full text-center px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 font-bold text-sm transition">
+                        <a href="/writer/earnings"
+                            class="block w-full text-center px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 font-bold text-sm transition">
                             View Earnings
                         </a>
                     </div>
@@ -326,7 +339,8 @@
                         <div class="p-4 hover:bg-gray-50 transition">
                             <div class="flex justify-between items-start">
                                 <div class="flex-1">
-                                    <p class="font-bold text-purple-600 text-sm">#{{ order._id.toString().slice(-6) }}</p>
+                                    <p class="font-bold text-purple-600 text-sm">#{{ order._id.toString().slice(-6) }}
+                                    </p>
                                     <p class="text-gray-800 font-medium text-sm mt-1">{{ order.title }}</p>
                                     <p class="text-gray-500 text-xs mt-1">Student: {{ order.userId.name }}</p>
                                 </div>
@@ -349,30 +363,36 @@
                     <h2 class="text-lg font-bold text-gray-800 mb-4">Tips to Earn More</h2>
                     <div class="space-y-3">
                         <div class="flex gap-3 items-start">
-                            <div class="w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <div
+                                class="w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0 mt-0.5">
                                 <span class="text-xs font-bold">1</span>
                             </div>
                             <div>
                                 <p class="font-semibold text-sm text-gray-800">Complete Orders Faster</p>
-                                <p class="text-xs text-gray-600 mt-1">Meeting deadlines increases your rating and reliability score</p>
+                                <p class="text-xs text-gray-600 mt-1">Meeting deadlines increases your rating and
+                                    reliability score</p>
                             </div>
                         </div>
                         <div class="flex gap-3 items-start">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <div
+                                class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
                                 <span class="text-xs font-bold">2</span>
                             </div>
                             <div>
                                 <p class="font-semibold text-sm text-gray-800">Browse Available Jobs</p>
-                                <p class="text-xs text-gray-600 mt-1">New orders are posted daily - check the available jobs regularly</p>
+                                <p class="text-xs text-gray-600 mt-1">New orders are posted daily - check the available
+                                    jobs regularly</p>
                             </div>
                         </div>
                         <div class="flex gap-3 items-start">
-                            <div class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <div
+                                class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5">
                                 <span class="text-xs font-bold">3</span>
                             </div>
                             <div>
                                 <p class="font-semibold text-sm text-gray-800">Communicate with Students</p>
-                                <p class="text-xs text-gray-600 mt-1">Quick responses and clear communication lead to better reviews</p>
+                                <p class="text-xs text-gray-600 mt-1">Quick responses and clear communication lead to
+                                    better reviews</p>
                             </div>
                         </div>
                     </div>

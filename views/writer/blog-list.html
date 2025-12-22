@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Manager — AvrilWriters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { slate: { 850: '#1e293b', 900: '#0f172a' } } } } }
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-900 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-gray-400 h-full flex flex-col shadow-2xl flex-shrink-0">
+        <div class="h-16 flex items-center px-6 border-b border-gray-800 bg-slate-900">
+            <div class="flex items-center gap-3">
+                <img src="{{ images.logo }}" alt="Logo" class="h-8 w-auto brightness-0 invert">
+                <span class="text-white font-bold text-lg tracking-wide">Writer Hub</span>
+            </div>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+            <a href="/writer/dashboard"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all">
+                <span class="font-medium">← Back to Dashboard</span>
+            </a>
+            <div class="px-3 mt-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Content</div>
+            <a href="/writer/blog"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-purple-600 text-white shadow-lg shadow-purple-900/20 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
+                    </path>
+                </svg>
+                <span class="font-medium">Blog Posts</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header
+            class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 flex-shrink-0">
+            <h1 class="text-xl font-bold text-gray-800">Blog Manager</h1>
+            <a href="/writer/blog/new"
+                class="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-purple-700 transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                New Article
+            </a>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-8 bg-gray-100">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 border-b border-gray-200 text-xs uppercase text-gray-500 font-bold">
+                        <tr>
+                            <th class="px-6 py-4">Title</th>
+                            <th class="px-6 py-4">Category</th>
+                            <th class="px-6 py-4">Date</th>
+                            <th class="px-6 py-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {% for post in posts %}
+                        <tr class="hover:bg-purple-50 transition">
+                            <td class="px-6 py-4">
+                                <p class="font-bold text-gray-900">{{ post.title }}</p>
+                                <a href="/blog/{{ post.slug }}" target="_blank"
+                                    class="text-xs text-blue-500 hover:underline">/blog/{{ post.slug }}</a>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full border border-gray-200">{{
+                                    post.category }}</span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                                {{ post.date.toDateString() }}
+                            </td>
+                            <td class="px-6 py-4 text-right flex justify-end gap-3">
+                                <a href="/writer/blog/edit/{{ post._id }}"
+                                    class="text-blue-600 hover:text-blue-800 text-sm font-bold bg-blue-50 px-3 py-1 rounded hover:bg-blue-100 transition">Edit</a>
+                                <form action="/writer/blog/delete/{{ post._id }}" method="POST"
+                                    onsubmit="return confirm('Are you sure? This cannot be undone.');">
+                                    <button type="submit"
+                                        class="text-red-600 hover:text-red-800 text-sm font-bold bg-red-50 px-3 py-1 rounded hover:bg-red-100 transition">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="p-12 text-center text-gray-500">No blog posts found. Click "New
+                                Article" to write one.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
