@@ -42,7 +42,7 @@
         <header
             class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 flex-shrink-0">
             <h1 class="text-xl font-bold text-gray-800">Blog Manager</h1>
-            <a href="/writer/blog/new"
+            <a href="/writer/blog/create"
                 class="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-purple-700 transition flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -83,6 +83,8 @@
                                     class="text-blue-600 hover:text-blue-800 text-sm font-bold bg-blue-50 px-3 py-1 rounded hover:bg-blue-100 transition">Edit</a>
                                 <form action="/writer/blog/delete/{{ post._id }}" method="POST"
                                     onsubmit="return confirm('Are you sure? This cannot be undone.');">
+                                    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
                                     <button type="submit"
                                         class="text-red-600 hover:text-red-800 text-sm font-bold bg-red-50 px-3 py-1 rounded hover:bg-red-100 transition">Delete</button>
                                 </form>

@@ -38,7 +38,7 @@ const OnlineClass = mongoose.model('OnlineClass', onlineClassSchema);
 
 async function connect() {
     try {
-        await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/tutorsonDB');
+        await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/avrilwritersDB');
         console.log("Seeding database...");
 
         // --------- 1. Proctored Exams ----------

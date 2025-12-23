@@ -5,10 +5,21 @@
     <meta charset="UTF-8">
     <title>Editor — AvrilWriters</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/xqbrk0qfxonafbg8c20ta2qtqxrr1x29rzydnnpxl61dlcyk/tinymce/8/tinymce.min.js"
+        referrerpolicy="origin" crossorigin="anonymous"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
     </script>
+    <style>
+        /* Fix for TinyMCE inside Tailwind */
+        .tox-tinymce {
+            border-radius: 0.5rem !important;
+            border-color: #d1d5db !important;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 font-sans text-gray-900 h-screen flex flex-col">
@@ -18,31 +29,43 @@
             <a href="/writer/blog" class="text-gray-500 hover:text-purple-600 transition">← Back</a>
             <h1 class="text-xl font-bold text-gray-800">{{ 'Edit Article' if post else 'New Article' }}</h1>
         </div>
+        {% if post %}
+        <a href="/blog/{{ post.slug }}" target="_blank" class="text-sm text-purple-600 font-bold hover:underline">View
+            Live Page ↗</a>
+        {% endif %}
     </header>
 
     <main class="flex-1 overflow-y-auto p-8">
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-5xl mx-auto">
             <form action="{{ '/writer/blog/update/' + post._id if post else '/writer/blog/create' }}" method="POST"
                 class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 space-y-6">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Article Title</label>
-                    <input type="text" name="title" value="{{ post.title }}" required
-                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition">
+                    <input type="text" name="title" value="{{ post.title }}" required id="titleInput"
+                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition font-serif text-lg">
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Slug (URL)</label>
                         <input type="text" name="slug" value="{{ post.slug }}" placeholder="e.g. how-to-pass-teas"
-                            required
-                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition font-mono text-sm">
-                        <p class="text-xs text-gray-400 mt-1">Lowercase, use hyphens, unique.</p>
+                            required id="slugInput"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition font-mono text-sm bg-gray-50">
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Category</label>
-                        <input type="text" name="category" value="{{ post.category }}" placeholder="e.g. Study Tips"
-                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition">
+                        <select name="category"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition bg-white">
+                            <option value="Nursing" {{ 'selected' if post.category=='Nursing' }}>Nursing</option>
+                            <option value="Business" {{ 'selected' if post.category=='Business' }}>Business</option>
+                            <option value="Law" {{ 'selected' if post.category=='Law' }}>Law</option>
+                            <option value="Science" {{ 'selected' if post.category=='Science' }}>Science</option>
+                            <option value="Productivity" {{ 'selected' if post.category=='Productivity' }}>Productivity
+                            </option>
+                            <option value="Writing" {{ 'selected' if post.category=='Writing' }}>Writing</option>
+                        </select>
                     </div>
                 </div>
 
@@ -55,34 +78,73 @@
                     <div class="md:col-span-2">
                         <label class="block text-sm font-bold text-gray-700 mb-2">Short Summary</label>
                         <input type="text" name="summary" value="{{ post.summary }}"
+                            placeholder="Appears on the blog list page..."
                             class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Content (HTML Supported)</label>
-                    <textarea name="content" rows="15"
-                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 outline-none transition font-mono text-sm leading-relaxed"
-                        placeholder="<p>Start writing...</p>">{{ post.content }}</textarea>
-                    <div class="mt-2 text-xs text-gray-500 flex gap-4">
-                        <span>Use &lt;h2&gt; for headers</span>
-                        <span>Use &lt;p&gt; for paragraphs</span>
-                        <span>Use &lt;ul&gt;&lt;li&gt; for lists</span>
-                    </div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Article Content</label>
+                    <textarea id="editor" name="content" rows="20"
+                        class="w-full px-4 py-3 rounded-lg border border-gray-300 outline-none transition">{{ post.content }}</textarea>
                 </div>
 
-                <div class="pt-4 flex items-center justify-end gap-4 border-t border-gray-100">
-                    <a href="/writer/blog"
-                        class="px-6 py-2.5 rounded-lg text-gray-500 hover:bg-gray-100 font-bold transition">Cancel</a>
-                    <button type="submit"
-                        class="bg-purple-600 text-white px-8 py-2.5 rounded-lg font-bold hover:bg-purple-700 shadow-lg shadow-purple-500/30 transition">
-                        {{ 'Update Article' if post else 'Publish Article' }}
-                    </button>
+                <div class="pt-4 flex items-center justify-between border-t border-gray-100">
+                    <div class="text-xs text-gray-400">
+                        Pro Tip: Use the <strong>&lt; &gt;</strong> button in the toolbar to paste raw HTML code.
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="/writer/blog"
+                            class="px-6 py-2.5 rounded-lg text-gray-500 hover:bg-gray-100 font-bold transition">Cancel</a>
+                        <button type="submit"
+                            class="bg-purple-600 text-white px-8 py-2.5 rounded-lg font-bold hover:bg-purple-700 shadow-lg shadow-purple-500/30 transition transform hover:-translate-y-0.5">
+                            {{ 'Update Article' if post else 'Publish Article' }}
+                        </button>
+                    </div>
                 </div>
 
             </form>
         </div>
     </main>
+
+    <script>
+        // Auto-generate slug from title
+        const titleInput = document.getElementById('titleInput');
+        const slugInput = document.getElementById('slugInput');
+
+        titleInput.addEventListener('input', () => {
+            // Only auto-update if creating a new post (slug is empty or matches old title)
+            if (!slugInput.value || slugInput.value === createSlug(titleInput.defaultValue)) {
+                slugInput.value = createSlug(titleInput.value);
+            }
+        });
+
+        function createSlug(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start of text
+                .replace(/-+$/, '');            // Trim - from end of text
+        }
+
+        // Editor Config
+        tinymce.init({
+            selector: '#editor',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount code',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | code',
+            menubar: false,
+            height: 600,
+            branding: false, // Hides the "Powered by Tiny" branding
+            placeholder: 'Start writing your amazing article here...',
+            content_style: `
+                body { font-family:Inter,sans-serif; font-size:16px; line-height:1.6; color:#374151; }
+                h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2em; margin-bottom: 1em; color: #111827; }
+                h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5em; margin-bottom: 0.8em; color: #1f2937; }
+                blockquote { border-left: 4px solid #e5e7eb; padding-left: 1rem; font-style: italic; color: #6b7280; }
+            `
+        });
+    </script>
 </body>
 
 </html>

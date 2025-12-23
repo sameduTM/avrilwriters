@@ -2,7 +2,7 @@ require('dotenv').config();
 
 // --- IMPORTS ---
 const compression = require('compression');
-const { doubleCsrf } = require('csrf-csrf');
+const { csrfSync } = require('csrf-sync');
 const express = require('express');
 const flash = require('express-flash');
 const { format } = require('date-fns');
@@ -62,14 +62,6 @@ env.addFilter('date', (date, formatStr) => {
 app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
 
-// --- MIDDLEWARE ---
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.SESSION_SECRET));
-app.use(flash());
-app.use(compression());
-
 // --- SESSION ---
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -83,28 +75,32 @@ app.use(session({
     }
 }));
 
+// --- MIDDLEWARE ---
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.SESSION_SECRET));
+app.use(flash());
+app.use(compression());
+
 // CSRF handler
-const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
-    getSecret: () => process.env.SESSION_SECRET,
-    getSessionIdentifier: (req) => req.session.id,
-    cookieName: "x-csrf-token",
-    cookieOptions: { sameSite: "lax", secure: process.env.NODE_ENV === "production" },
+const { csrfSynchronisedProtection,
+    generateToken
+} = csrfSync({
+    getTokenFromRequest: (req) => {
+        return req.body['_csrf'] || req.headers['x-csrf-token'];
+    },
 });
 
+// Create token for every request and pass it to every view
 app.use((req, res, next) => {
-    res.locals.csrfToken = generateCsrfToken(req, res);
+    res.locals.csrfToken = generateToken(req);
     next();
 });
 
-// Apply CSRF protection only to routes that require it (exclude public auth routes)
-app.use((req, res, next) => {
-    // Skip CSRF validation for public auth routes and API endpoints
-    if (req.path === '/login' || req.path === '/signup' || req.path === '/forgot-password' || req.path === '/reset-password' || req.path === '/orders/api/place-order' || req.path === '/messages/api/check-messages' || req.path === '/messages/api/send') {
-        return next();
-    }
-    doubleCsrfProtection(req, res, next);
-});
-
+// Enable protection
+// Block any POST, PUT, DELETE request without valid token. Ignores GET requests
+app.use(csrfSynchronisedProtection);
 
 // --- ROUTES ---
 // Mount specific routers first to prevent conflicts
@@ -130,6 +126,7 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
     // CSRF Error Handler
+    console.log(err);
     if (err.code === 'EBADCSRFTOKEN') {
         console.warn("⚠️ CSRF Validation Failed");
         req.flash('error', 'Form session expired. Please try again.');

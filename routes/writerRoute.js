@@ -35,7 +35,7 @@ writerRouter.get('/blog', async (req, res) => {
 });
 
 // 2. SHOW CREATE FORM
-writerRouter.get('/blog/new', (req, res) => {
+writerRouter.get('/blog/create', (req, res) => {
     res.render('writer/blog-editor.html', {
         post: null,
         user: req.session.user,
@@ -64,7 +64,7 @@ writerRouter.get('/blog/edit/:id', async (req, res) => {
 // 4. CREATE POST
 writerRouter.post('/blog/create', async (req, res) => {
     try {
-        await Post.create(req.body);
+        const newPost = await Post.create(req.body);
         req.flash('success', 'Article published successfully!');
         res.redirect('/writer/blog');
     } catch (err) {
