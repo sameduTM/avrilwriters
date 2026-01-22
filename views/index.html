@@ -132,7 +132,7 @@
 
             <div class="flex items-center gap-3 group cursor-pointer pl-4">
                 <a href="/" class="transition-transform duration-300 group-hover:scale-105">
-                    <img src="{{ images.logo }}" alt="Logo" class="h-10">
+                    <img src="{{ images.logo }}" alt="Logo" class="h-10 rounded-full object-cover">
                 </a>
                 <a href="/" class="flex flex-col">
                     <span class="text-slate-800 font-bold text-xl tracking-tight leading-none">AvrilWriters</span>
@@ -273,17 +273,18 @@
                                     <select id="type"
                                         class="w-full mt-1 border-gray-200 rounded-lg p-3 bg-white focus:ring-2 focus:ring-primary focus:border-primary transition outline-none font-medium">
                                         <option value="0">Select Service...</option>
-                                        <option value="35">Essay Writing (Per Page)</option>
-                                        <option value="150">Business Case Study</option>
-                                        <option value="120">Legal/Law Memo</option>
-                                        <option value="100">Lab Report (STEM)</option>
+                                        <option value="12">Essay Writing (Per Page - Standard)</option>
+                                        <option value="18">Essay Writing (Per Page - Advanced)</option>
+                                        <option value="85">Business Case Study</option>
+                                        <option value="75">Legal/Law Memo</option>
+                                        <option value="65">Lab Report (STEM)</option>
                                         <option value="0">--- Nursing Specials ---</option>
-                                        <option value="100">ATI TEAS</option>
-                                        <option value="100">HESI A2</option>
-                                        <option value="100">HESI RN Exit</option>
+                                        <option value="100">ATI TEAS Help</option>
+                                        <option value="100">HESI A2 Help</option>
+                                        <option value="85">HESI RN Exit Help</option>
                                         <option value="0">--- Full Support ---</option>
-                                        <option value="150">Proctored Exams (From)</option>
-                                        <option value="500">Online Classes (Weekly From)</option>
+                                        <option value="90">Proctored Exams (Starting From)</option>
+                                        <option value="150">Online Classes (Weekly Support)</option>
                                     </select>
                                 </div>
                             </div>
@@ -317,36 +318,62 @@
                                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                                 <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
                             </span>
-                            Free Resource for Nursing Students
+                            Free Resource for All Students
                         </div>
 
                         <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
-                            Crush Nursing School with our <span class="text-blue-600">Ultimate Study Guide</span>
+                            The Ultimate Academic Blueprint: <span class="text-blue-600">Master Any Subject in Half the
+                                Time</span>
                         </h2>
 
                         <p class="text-slate-600 text-lg">
-                            Struggling with complex concepts? We've condensed the most critical <strong>Lab Values,
-                                Pharmacology, and NCLEX strategies</strong> into one free 5-page PDF blueprint.
+                            From nursing clinicals to complex engineering formulas, we’ve condensed the world’s hardest
+                            subjects into one high-yield study system. <strong>Download our free 5-page guide</strong>
+                            to learn the exact frameworks used by top-tier students to ace their exams without the
+                            burnout.
                         </p>
 
                         <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-700 font-medium">
-                            <li class="flex items-center gap-2">✅ Essential Lab Values Cheat Sheet</li>
-                            <li class="flex items-center gap-2">✅ Pharmacology & Antidote Guide</li>
-                            <li class="flex items-center gap-2">✅ High-Yield NCLEX Priority Tips</li>
-                            <li class="flex items-center gap-2">✅ Acid-Base Balance (ROME) Made Easy</li>
+                            <li class="flex items-center gap-2">✅ Universal Formula Cheat Sheets (Math, Physics,
+                                Chemistry)</li>
+                            <li class="flex items-center gap-2">✅ High-Yield Concept Summaries (Biology, Nursing,
+                                Anatomy)</li>
+                            <li class="flex items-center gap-2">✅ Financial & Accounting Ratio Guide (Business, Finance)
+                            </li>
+                            <li class="flex items-center gap-2">✅ Essay & Case Study Frameworks (All Subjects)</li>
+                            <li class="flex items-center gap-2">✅ The 80/20 Study Method for Finals (Productivity)</li>
                         </ul>
 
                         <div class="pt-4">
-                            <form action="/study-guide" class="flex flex-col sm:flex-row gap-3">
-                                <input type="email" placeholder="Enter your student email" required
-                                    class="flex-1 px-6 py-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all">
-                                <button type="submit"
-                                    class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-0.5">
-                                    Get My Free PDF
-                                </button>
+                            <form action="/study-guide" method="POST" class="flex flex-col gap-4">
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <input type="text" name="first_name" placeholder="First Name" required
+                                        class="flex-1 px-6 py-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all">
+
+                                    <input type="email" name="email" placeholder="Student email address" required
+                                        class="flex-1 px-6 py-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all">
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <select name="major" required title="Select Your Major"
+                                        class="flex-1 px-6 py-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all text-slate-600">
+                                        <option value="" disabled selected>Select Your Major</option>
+                                        <option value="nursing">Nursing & Healthcare</option>
+                                        <option value="business">Business & Finance</option>
+                                        <option value="stem">STEM (Science, Tech, Engineering, Math)</option>
+                                        <option value="humanities">Humanities & Social Sciences</option>
+                                        <option value="other">Other</option>
+                                    </select>
+
+                                    <button type="submit"
+                                        class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-0.5">
+                                        Get My Free PDF
+                                    </button>
+                                </div>
                             </form>
-                            <p class="text-xs text-slate-400 mt-3 italic text-center sm:text-left">
-                                Join 5,000+ nursing students leveling up their grades. No credit card required.
+
+                            <p class="text-xs text-slate-400 mt-4 italic text-center sm:text-left">
+                                Join 5,000+ students from all majors leveling up their grades. No credit card required.
                             </p>
                         </div>
                     </div>

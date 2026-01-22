@@ -1,3 +1,11 @@
+require('dotenv').config();
+const fs = require('fs');
+const handlebars = require('handlebars');
+const path = require('path');
+
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const express = require('express');
 const OrderService = require('../services/orderService');
 const { requireStudent } = require('../middlewares/roleAuth');
@@ -57,6 +65,68 @@ userRouter.get('/signup', (req, res) => {
     res.render('sign-up.html', {
         images: IMAGE_PATHS,
     });
+});
+
+userRouter.get('/study-guide-success', (req, res) => {
+    res.render('study-guide-success.html', {
+        title: "Success | Avril Writers",
+        images: IMAGE_PATHS,
+    });
+});
+
+userRouter.post('/study-guide', async (req, res) => {
+    const { first_name, email, major } = req.body;
+
+    const BASE_URL = process.env.NODE_ENV === 'production'
+        ? 'https://avrilwriters.com'
+        : `http://127.0.0.1:${process.env.PORT}`;
+
+    const links = {
+        nursing: `${BASE_URL}/dl/nursing-blueprint.pdf`,
+        business: `${BASE_URL}/dl/finance-blueprint.pdf`,
+        stem: `${BASE_URL}/dl/stem-blueprint.pdf`,
+        humanities: `${BASE_URL}/dl/humanities-blueprint.pdf`,
+        other: `${BASE_URL}/dl/general-blueprint.pdf`
+    };
+
+    const filePath = path.join(__dirname, '..', 'views', 'email.html');
+    const source = fs.readFileSync(filePath, 'utf-8');
+    const template = handlebars.compile(source);
+
+    const htmlToSend = template({
+        first_name: first_name,
+        major: major.charAt(0).toUpperCase() + major.slice(1),
+        download_url: links[major] || links.other
+    });
+
+    try {
+        if (process.env.NODE_ENV !== 'production') {
+            const logFolder = path.join(__dirname, '..', 'mail_logs');
+            if (!fs.existsSync(logFolder)) fs.mkdirSync(logFolder);
+
+            const filename = `email_${Date.now()}_${email.replace(/[^a-z0-9]/gi, '_')}.html`;
+            const logPath = path.join(logFolder, filename);
+
+            // fs.writeFileSync(logPath, htmlToSend);
+
+            console.log(`✅ [DEV MODE] Email logged to: ${logPath}`);
+            return res.redirect('/study-guide-success')
+        }
+        // Production: Resend Logic
+        await resend.emails.send({
+            from: 'Avril Writers <info@avrilwriters.com>',
+            to: [email],
+            reply_to: 'wanyamak884@gmail.com',
+            subject: 'Your Academic Blueprint is ready',
+            html: htmlToSend,
+        });
+
+        res.redirect('/study-guide-success');
+
+    } catch (error) {
+        console.error("Resend Error:", error);
+        res.status(500).send("Error processing request.");
+    }
 });
 
 userRouter.post('/signup', async (req, res, next) => {

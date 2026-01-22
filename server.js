@@ -47,6 +47,7 @@ app.use(helmet({
 // --- STATIC FILES ---
 app.use(express.static(path.join(__dirname, 'views/static')));
 app.use('/uploads', express.static('uploads'));
+app.use('/dl', express.static(path.join(__dirname, 'public/dl')));
 
 // --- TEMPLATE ENGINE ---
 const env = nunjucks.configure(path.join(__dirname, 'views'), {
@@ -60,8 +61,8 @@ env.addFilter('date', (date, formatStr) => {
     return format(new Date(date), formatStr || 'MMM d, yyyy');
 });
 
-app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
+app.set('view engine', 'html');
 
 // --- SESSION ---
 app.use(session({
@@ -101,7 +102,13 @@ app.use((req, res, next) => {
 
 // Enable protection
 // Block any POST, PUT, DELETE request without valid token. Ignores GET requests
-app.use(csrfSynchronisedProtection);
+app.use((req, res, next) => {
+    // ignore protection unless in production
+    if (process.env.NODE_ENV !== 'production') {
+        return next();
+    }
+    csrfSynchronisedProtection(req, res, next);
+});
 
 // --- ROUTES ---
 // Mount specific routers first to prevent conflicts
@@ -127,8 +134,11 @@ app.use((req, res) => {
 
 
 app.use((err, req, res, next) => {
+    if (process.env.NODE_ENV !== 'production') {
+        console.info("🛠️ Development Mode: Ignoring CSRF error.");
+        return next();
+    }
     // CSRF Error Handler
-    console.log(err);
     if (err.code === 'EBADCSRFTOKEN') {
         console.warn("⚠️ CSRF Validation Failed");
         req.flash('error', 'Form session expired. Please try again.');

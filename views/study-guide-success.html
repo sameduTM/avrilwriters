@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success | AvrilWriters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50">
+
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/"
+                        class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+                        AvrilWriters
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/#services"
+                        class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Services</a>
+                    <a href="/#samples"
+                        class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Samples</a>
+                    <a href="/#reviews"
+                        class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Reviews</a>
+                    <a href="/login" class="text-slate-600 hover:text-indigo-600 font-medium">Login</a>
+                    <a href="/signup"
+                        class="bg-indigo-600 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg">
+                        Join Now
+                    </a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-slate-600 hover:text-indigo-600 p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3">
+            <a href="/#services" class="block text-slate-600 font-medium">Services</a>
+            <a href="/#samples" class="block text-slate-600 font-medium">Samples</a>
+            <a href="/login" class="block text-slate-600 font-medium">Login</a>
+            <a href="/signup" class="block bg-indigo-600 text-white px-4 py-2 rounded-lg text-center font-semibold">Join
+                Now</a>
+        </div>
+    </nav>
+
+    <main class="min-h-[calc(100vh-64px)] flex items-center justify-center px-4 py-12">
+        <div
+            class="max-w-md w-full bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-8 md:p-12 text-center border border-slate-100">
+            <div
+                class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+            </div>
+
+            <h1 class="text-3xl font-bold text-slate-900 mb-4">Check Your Inbox!</h1>
+            <p class="text-slate-600 text-lg mb-8 leading-relaxed">
+                Your custom academic blueprint is on its way. Please check your
+                <span class="font-semibold text-indigo-600">Email</span> (and spam folder) to download it.
+            </p>
+
+            <div class="space-y-4">
+                <a href="/dashboard"
+                    class="block w-full bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-slate-800 transition-all">
+                    Go to Dashboard
+                </a>
+                <a href="/#services" class="block w-full text-indigo-600 font-semibold hover:underline">
+                    Browse Other Services
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle logic
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>
